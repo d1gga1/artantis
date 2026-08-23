@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/wordmark";
 import { FadeIn } from "@/components/motion";
+import { AUTH_PANEL } from "@/lib/covers";
 
 export function AuthShell({
   title,
@@ -16,7 +17,9 @@ export function AuthShell({
   return (
     <div className="grid min-h-[calc(100vh-68px)] lg:grid-cols-[1fr_1.05fr]">
       <aside className="relative hidden overflow-hidden border-r border-line bg-paper-warm lg:block">
-        <div className="grid-canvas absolute inset-0" aria-hidden />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={AUTH_PANEL} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/45 to-white/80" aria-hidden />
         <div className="relative flex h-full flex-col justify-between p-12">
           <Wordmark size="lg" subtitle={false} />
 

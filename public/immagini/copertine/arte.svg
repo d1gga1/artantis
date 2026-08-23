@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" preserveAspectRatio="xMidYMid slice">
+  <defs>
+  <radialGradient id="w" cx="18%" cy="4%" r="115%">
+    <stop offset="0%" stop-color="#eaf3f6"/>
+    <stop offset="48%" stop-color="#f6f9fb"/>
+    <stop offset="100%" stop-color="#ffffff"/>
+  </radialGradient>
+  <radialGradient id="b" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#0f6f8c" stop-opacity="0.20"/>
+    <stop offset="70%" stop-color="#0f6f8c" stop-opacity="0.05"/>
+    <stop offset="100%" stop-color="#0f6f8c" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="g" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
+  </filter>
+  </defs>
+  <rect width="1600" height="400" fill="url(#w)"/>
+  <ellipse cx="1330" cy="60" rx="420" ry="300" fill="url(#b)"/>
+  <circle cx="420" cy="180" r="150" fill="#0f6f8c" fill-opacity="0.13"/><rect x="520" y="90" width="240" height="240" rx="18" fill="#0a4f65" fill-opacity="0.10" transform="rotate(-8 640 210)"/><path d="M820 320 L960 80 L1100 320 Z" fill="#0f6f8c" fill-opacity="0.11"/><circle cx="1080" cy="200" r="110" fill="none" stroke="#0a4f65" stroke-opacity="0.28" stroke-width="2"/><rect x="200" y="150" width="180" height="180" rx="90" fill="none" stroke="#0f6f8c" stroke-opacity="0.3" stroke-width="2"/>
+  <rect width="1600" height="400" filter="url(#g)" opacity="0.6"/>
+</svg>

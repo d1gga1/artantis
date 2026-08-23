@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Avatar } from "@/components/avatar";
 import { professionLabel, type Profile } from "@/lib/types";
+import { coverFor } from "@/lib/covers";
 import { formatCount } from "@/lib/utils";
 
 export function ProfileMiniCard({ profile }: { profile: Profile }) {
@@ -29,12 +30,12 @@ export function ProfileCard({ profile }: { profile: Profile }) {
       className="surface group block overflow-hidden transition-shadow duration-300 hover:shadow-lift"
     >
       <div className="relative h-20 bg-paper-sunk">
-        {profile.cover_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={profile.cover_url} alt="" className="h-full w-full object-cover" />
-        ) : (
-          <div className="cover-blank h-full w-full" />
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={profile.cover_url ?? coverFor(profile.profession)}
+          alt=""
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+        />
       </div>
       <div className="px-5 pb-5">
         <div className="-mt-8 mb-3">

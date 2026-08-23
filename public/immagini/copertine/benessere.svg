@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" preserveAspectRatio="xMidYMid slice">
+<defs>
+  <radialGradient id="w" cx="18%" cy="4%" r="115%">
+    <stop offset="0%" stop-color="#edf4f2"/><stop offset="48%" stop-color="#f8fafa"/><stop offset="100%" stop-color="#ffffff"/>
+  </radialGradient>
+  <radialGradient id="b" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#0f6f8c" stop-opacity="0.18"/><stop offset="70%" stop-color="#0f6f8c" stop-opacity="0.04"/><stop offset="100%" stop-color="#0f6f8c" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="g" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="13"/>
+    <feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+  </filter></defs>
+<rect width="1600" height="400" fill="url(#w)"/>
+<ellipse cx="1330" cy="60" rx="420" ry="300" fill="url(#b)"/>
+<path d="M-40 110 Q35 80 110 110 Q185 140 260 110 Q335 80 410 110 Q485 140 560 110 Q635 80 710 110 Q785 140 860 110 Q935 80 1010 110 Q1085 140 1160 110 Q1235 80 1310 110 Q1385 140 1460 110 Q1535 80 1610 110 Q1685 140 1760 110" fill="none" stroke="#0f6f8c" stroke-opacity="0.300" stroke-width="2.4"/><path d="M-40 158 Q35 131 110 158 Q185 185 260 158 Q335 131 410 158 Q485 185 560 158 Q635 131 710 158 Q785 185 860 158 Q935 131 1010 158 Q1085 185 1160 158 Q1235 131 1310 158 Q1385 185 1460 158 Q1535 131 1610 158 Q1685 185 1760 158" fill="none" stroke="#0f6f8c" stroke-opacity="0.255" stroke-width="2.1999999999999997"/><path d="M-40 206 Q35 182 110 206 Q185 230 260 206 Q335 182 410 206 Q485 230 560 206 Q635 182 710 206 Q785 230 860 206 Q935 182 1010 206 Q1085 230 1160 206 Q1235 182 1310 206 Q1385 230 1460 206 Q1535 182 1610 206 Q1685 230 1760 206" fill="none" stroke="#0f6f8c" stroke-opacity="0.210" stroke-width="2"/><path d="M-40 254 Q35 233 110 254 Q185 275 260 254 Q335 233 410 254 Q485 275 560 254 Q635 233 710 254 Q785 275 860 254 Q935 233 1010 254 Q1085 275 1160 254 Q1235 233 1310 254 Q1385 275 1460 254 Q1535 233 1610 254 Q1685 275 1760 254" fill="none" stroke="#0f6f8c" stroke-opacity="0.165" stroke-width="1.7999999999999998"/><path d="M-40 302 Q35 284 110 302 Q185 320 260 302 Q335 284 410 302 Q485 320 560 302 Q635 284 710 302 Q785 320 860 302 Q935 284 1010 302 Q1085 320 1160 302 Q1235 284 1310 302 Q1385 320 1460 302 Q1535 284 1610 302 Q1685 320 1760 302" fill="none" stroke="#0f6f8c" stroke-opacity="0.120" stroke-width="1.5999999999999999"/>
+<rect width="1600" height="400" filter="url(#g)" opacity="0.55"/>
+</svg>

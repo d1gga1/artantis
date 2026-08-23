@@ -28,7 +28,10 @@ function sortMedia(posts: Post[]) {
 }
 
 export async function getSessionUser() {
-  if (DEMO) return { id: DEMO_PROFILES[0].id } as { id: string };
+  if (DEMO) {
+    if (process.env.ARTANTIS_DEMO_GUEST === "1") return null;
+    return { id: DEMO_PROFILES[0].id } as { id: string };
+  }
   const supabase = await createClient();
   const {
     data: { user },

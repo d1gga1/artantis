@@ -108,7 +108,7 @@ export default async function ProfilePage({
 
   return (
     <div>
-      <ProfileCover url={profile.cover_url} />
+      <ProfileCover url={profile.cover_url} profession={profile.profession} />
 
       <div className="container-page max-w-5xl">
         <div className="relative -mt-16 sm:-mt-20">
