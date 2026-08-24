@@ -181,7 +181,7 @@ export function LivingBackground({
           const d2 = dx * dx + dy * dy;
           if (d2 > LINK * LINK) continue;
           const d = Math.sqrt(d2);
-          const alpha = (1 - d / LINK) * 0.42 * intensity;
+          const alpha = (1 - d / LINK) * 0.50 * intensity;
           ctx.strokeStyle = `rgba(${Math.round((a.c[0] + b.c[0]) / 2)},${Math.round(
             (a.c[1] + b.c[1]) / 2
           )},${Math.round((a.c[2] + b.c[2]) / 2)}, ${alpha})`;
@@ -217,7 +217,7 @@ export function LivingBackground({
       }
 
       for (const n of nodes) {
-        ctx.fillStyle = `rgba(${n.c.join(",")}, ${0.78 * intensity})`;
+        ctx.fillStyle = `rgba(${n.c.join(",")}, ${0.90 * intensity})`;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
         ctx.fill();

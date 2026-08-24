@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { BYLINE } from "@/lib/brand";
+import { BYLINE, FIRMA } from "@/lib/brand";
 
 export function Wordmark({
   className,
@@ -35,7 +35,9 @@ export function Wordmark({
       </span>
       {subtitle && (
         <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-soft sm:mt-0 sm:text-[12px]">
-          {BYLINE}
+          {/* sugli schermi larghi c'è posto per la firma intera */}
+          <span className="xl:hidden">{BYLINE}</span>
+          <span className="hidden xl:inline">{FIRMA}</span>
         </span>
       )}
     </Link>

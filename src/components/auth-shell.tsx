@@ -3,7 +3,7 @@ import { Wordmark } from "@/components/wordmark";
 import { FadeIn } from "@/components/motion";
 import { AUTH_PANEL } from "@/lib/covers";
 import { LivingBackground } from "@/components/living-background";
-import { EDITORIAL_LINE } from "@/lib/brand";
+import { Firma } from "@/components/firma";
 
 export function AuthShell({
   title,
@@ -36,9 +36,7 @@ export function AuthShell({
               proposto viene letto dalla direzione editoriale prima di comparire nel feed:
               è così che lo spazio resta di qualità.
             </p>
-            <p className="mt-8 text-[13.5px] font-medium uppercase tracking-[0.14em] text-ink-soft">
-              {EDITORIAL_LINE}
-            </p>
+            <Firma variante="riga" className="mt-8" />
           </div>
 
           <div className="flex flex-wrap gap-2">

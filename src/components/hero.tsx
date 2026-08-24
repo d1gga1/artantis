@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import { ReviewFlow } from "@/components/review-flow";
 import { PROFESSIONS } from "@/lib/types";
 import { tint } from "@/lib/palette";
-import { AUTHOR_NAME } from "@/lib/brand";
+import { COLORE } from "@/lib/colore";
+import { Firma } from "@/components/firma";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -44,15 +45,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease }}
-              className="mb-7 inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 rounded-3xl border border-line bg-white/90 px-4 py-2 sm:rounded-full sm:bg-white/75 sm:backdrop-blur"
+              className="mb-7"
             >
-              <Sparkles size={14} className="shrink-0 text-accent" />
-              <span className="text-[13px] font-medium tracking-wide text-ink-soft">
-                Spazio editoriale curato by
-              </span>
-              <span className="text-[14px] font-semibold uppercase tracking-[0.06em] text-ink">
-                {AUTHOR_NAME}
-              </span>
+              <Firma />
             </motion.div>
 
             <h1 className="max-w-4xl text-[42px] font-semibold leading-[1.04] tracking-tight sm:text-[62px] lg:text-[76px]">
@@ -120,9 +115,9 @@ export function Hero() {
                       href={`/esplora?professione=${p.value}`}
                       className="chip transition-all duration-300"
                       style={{
-                        borderColor: `rgba(${t.glow}, 0.42)`,
+                        borderColor: `rgba(${t.glow}, ${COLORE.bordoPastiglia})`,
                         color: t.deep,
-                        background: `rgba(${t.glow}, 0.11)`,
+                        background: `rgba(${t.glow}, ${COLORE.pastiglia})`,
                         boxShadow: `0 10px 24px -16px rgba(${t.glow}, 0.95)`,
                       }}
                     >

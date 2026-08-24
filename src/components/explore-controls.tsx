@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Loader2, Search } from "lucide-react";
 import { PROFESSIONS } from "@/lib/types";
 import { tint } from "@/lib/palette";
+import { COLORE } from "@/lib/colore";
 import { cn } from "@/lib/utils";
 
 export function ExploreControls() {
@@ -95,8 +96,8 @@ function FilterChip({
         }
       : {
           color: tone.deep,
-          borderColor: `rgba(${tone.glow}, 0.42)`,
-          background: `rgba(${tone.glow}, 0.11)`,
+          borderColor: `rgba(${tone.glow}, ${COLORE.bordoPastiglia})`,
+          background: `rgba(${tone.glow}, ${COLORE.pastiglia})`,
         }
     : undefined;
 

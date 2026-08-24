@@ -6,6 +6,7 @@ import { FeedTabs } from "@/components/feed-tabs";
 import { EmptyState } from "@/components/empty-state";
 import { ProfileMiniCard } from "@/components/profile-mini-card";
 import { Reveal } from "@/components/motion";
+import { nomeProprio } from "@/lib/utils";
 import {
   getCurrentProfile,
   getFeed,
@@ -46,7 +47,7 @@ export default async function HomePage({
                   <div>
                     <p className="eyebrow">Bentornato</p>
                     <h1 className="mt-1.5 text-[30px] font-semibold leading-tight sm:text-[36px]">
-                      {profile.full_name?.split(" ")[0] || profile.username}
+                      {nomeProprio(profile.full_name, profile.username)}
                     </h1>
                   </div>
                   <Link href="/pubblica" className="btn-accent self-start sm:self-auto">
@@ -98,7 +99,7 @@ export default async function HomePage({
               <div className="surface p-5">
                 <div className="mb-3 flex items-center gap-2">
                   <ShieldCheck size={15} className="text-accent" />
-                  <h2 className="text-[13px] font-semibold uppercase tracking-[0.12em]">
+                  <h2 className="text-[13px] font-semibold uppercase tracking-[0.12em] text-accent">
                     Come funziona
                   </h2>
                 </div>
@@ -128,7 +129,7 @@ export default async function HomePage({
                 <div className="surface p-5">
                   <div className="mb-2 flex items-center gap-2">
                     <Sparkles size={15} className="text-accent" />
-                    <h2 className="text-[13px] font-semibold uppercase tracking-[0.12em]">
+                    <h2 className="text-[13px] font-semibold uppercase tracking-[0.12em] text-accent">
                       Da scoprire
                     </h2>
                   </div>

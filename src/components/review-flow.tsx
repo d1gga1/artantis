@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Check, Clock, Send } from "lucide-react";
 import { EDITORIAL_LINE } from "@/lib/brand";
+import { Firma } from "@/components/firma";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -83,6 +84,8 @@ export function ReviewFlow() {
       >
         Nessun contenuto compare nel feed senza passare da questa revisione.
       </motion.p>
+
+      <Firma variante="riga" className="mt-3 pl-1 text-[12.5px]" />
     </div>
   );
 }

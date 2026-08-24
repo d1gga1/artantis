@@ -7,6 +7,7 @@ import { EmptyState } from "@/components/empty-state";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { searchProfiles } from "@/lib/queries";
 import { professionLabel } from "@/lib/types";
+import { Firma } from "@/components/firma";
 
 export const metadata: Metadata = { title: "Esplora" };
 export const dynamic = "force-dynamic";
@@ -30,6 +31,7 @@ export default async function ExplorePage({
           Ricercatori, medici, artisti, pittori, farmacisti e professionisti di arte e
           benessere. Trova chi lavora su ciò che ti interessa e inizia a seguirlo.
         </p>
+        <Firma className="mt-5" />
       </Reveal>
 
       <div className="mt-9">

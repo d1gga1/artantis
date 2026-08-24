@@ -8,7 +8,9 @@ import { CountUp } from "@/components/count-up";
 import { getCurrentProfile, searchProfiles } from "@/lib/queries";
 import { PROFESSIONS, professionLabel, type Profile } from "@/lib/types";
 import { tint, tintVars } from "@/lib/palette";
+import { COLORE } from "@/lib/colore";
 import { formatCount, formatDateIt } from "@/lib/utils";
+import { Firma } from "@/components/firma";
 
 export const metadata: Metadata = { title: "Membri" };
 export const dynamic = "force-dynamic";
@@ -39,6 +41,7 @@ export default async function MembersPage() {
           all&apos;ultimo profilo registrato. Accanto a ogni nome trovi il ruolo
           e la disciplina.
         </p>
+        <Firma className="mt-5" />
       </Reveal>
 
       <Reveal delay={0.06}>
@@ -56,9 +59,9 @@ export default async function MembersPage() {
                 href={`/esplora?professione=${p.value}`}
                 className="inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-[13px] font-medium transition-transform hover:-translate-y-0.5"
                 style={{
-                  borderColor: `rgba(${t.glow}, 0.42)`,
+                  borderColor: `rgba(${t.glow}, ${COLORE.bordoPastiglia})`,
                   color: t.deep,
-                  background: `rgba(${t.glow}, 0.11)`,
+                  background: `rgba(${t.glow}, ${COLORE.pastiglia})`,
                 }}
               >
                 <span className="h-1.5 w-1.5 rounded-full" style={{ background: t.ink }} />

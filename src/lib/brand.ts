@@ -4,7 +4,13 @@
  */
 export const AUTHOR_NAME = "Dott. Vincenzo Silvano";
 
-/** Firma breve, usata nell'intestazione, nell'hero e nel piè di pagina. */
+/** L'attacco della firma completa. */
+export const CLAIM = "Spazio editoriale curato by";
+
+/** Firma completa: è quella che compare in tutto il sito. */
+export const FIRMA = `${CLAIM} ${AUTHOR_NAME}`;
+
+/** Versione corta, dove non c'è spazio per la firma intera. */
 export const BYLINE = `By ${AUTHOR_NAME}`;
 
 /** Firma estesa, usata dove si parla della revisione dei contenuti. */

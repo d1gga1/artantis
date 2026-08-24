@@ -1,6 +1,7 @@
 "use client";
 
 import { LivingBackground } from "@/components/living-background";
+import { COLORE } from "@/lib/colore";
 
 /**
  * Sfondo del sito: una sola tela fissa dietro a tutte le pagine.
@@ -19,9 +20,9 @@ export function SiteBackground() {
       className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-screen isolate transform-gpu overflow-hidden"
       aria-hidden
     >
-      <LivingBackground intensity={0.95} density={0.72} />
+      <LivingBackground intensity={COLORE.sfondo} density={COLORE.densita} />
       {/* velo che tiene tutto leggibile: la rete si vede, il testo vince sempre */}
-      <div className="absolute inset-0 bg-white/58 sm:bg-white/50" />
+      <div className={`absolute inset-0 ${COLORE.velo}`} />
     </div>
   );
 }

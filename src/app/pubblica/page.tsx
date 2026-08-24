@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { PostComposer } from "@/components/post-composer";
 import { Reveal } from "@/components/motion";
 import { getCurrentProfile } from "@/lib/queries";
+import { Firma } from "@/components/firma";
 
 export const metadata: Metadata = { title: "Proponi un contenuto" };
 export const dynamic = "force-dynamic";
@@ -23,6 +24,7 @@ export default async function PublishPage() {
           Quando invii, la proposta arriva alla direzione editoriale che decide
           se pubblicarla nel feed.
         </p>
+        <Firma className="mt-5" />
       </Reveal>
 
       <div className="mt-10">

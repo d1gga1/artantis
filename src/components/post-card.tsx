@@ -8,6 +8,7 @@ import { MediaGallery } from "@/components/media-gallery";
 import { InteractionBar } from "@/components/interaction-bar";
 import { professionLabel, type Post } from "@/lib/types";
 import { tint, tintVars } from "@/lib/palette";
+import { COLORE } from "@/lib/colore";
 import { cn, timeAgo } from "@/lib/utils";
 
 export function PostCard({
@@ -35,14 +36,14 @@ export function PostCard({
       transition={{ duration: 0.55, delay: Math.min(index, 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
       style={{
         ...tintVars(post.author?.profession),
-        borderColor: `rgba(${t.glow}, 0.30)`,
-        backgroundImage: `linear-gradient(180deg, rgba(${t.glow},0.07) 0%, rgba(255,255,255,0) 180px)`,
+        borderColor: `rgba(${t.glow}, 0.45)`,
+        backgroundImage: `linear-gradient(180deg, rgba(${t.glow},${COLORE.scheda}) 0%, rgba(255,255,255,0) 240px)`,
       }}
       className="group surface tint-glow spotlight relative overflow-hidden p-5 sm:p-6"
     >
       {/* filo del colore della disciplina: sempre acceso, più pieno al passaggio */}
       <span
-        className="tinted-rule absolute left-0 top-0 h-[3px] w-full origin-left opacity-70 transition-opacity duration-500 ease-out group-hover:opacity-100"
+        className="tinted-rule absolute left-0 top-0 h-[4px] w-full origin-left transition-opacity duration-500 ease-out"
         aria-hidden
       />
       <header className="flex items-start gap-3">

@@ -7,6 +7,7 @@ import { PostCard } from "@/components/post-card";
 import { Reveal } from "@/components/motion";
 import { getCurrentProfile, getPendingPosts, getReviewedPosts } from "@/lib/queries";
 import { cn } from "@/lib/utils";
+import { Firma } from "@/components/firma";
 
 export const metadata: Metadata = { title: "Moderazione" };
 export const dynamic = "force-dynamic";
@@ -54,6 +55,7 @@ export default async function ModerationPage({
           Ogni proposta arriva qui prima di comparire nel feed. Approva per pubblicare,
           oppure rifiuta indicando all&apos;autore il motivo.
         </p>
+        <Firma className="mt-5" />
       </Reveal>
 
       <Reveal delay={0.06}>

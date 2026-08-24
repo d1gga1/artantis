@@ -8,6 +8,7 @@ import { Reveal } from "@/components/motion";
 import { getCurrentProfile, getPostsByAuthor } from "@/lib/queries";
 import { CountUp } from "@/components/count-up";
 import { cn } from "@/lib/utils";
+import { Firma } from "@/components/firma";
 
 export const metadata: Metadata = { title: "Area personale" };
 export const dynamic = "force-dynamic";
@@ -48,6 +49,7 @@ export default async function PersonalAreaPage({
         <p className="mt-3 max-w-xl text-[15.5px] leading-relaxed text-ink-soft">
           Da qui gestisci il tuo profilo pubblico e segui lo stato di tutto ciò che hai proposto.
         </p>
+        <Firma className="mt-5" />
       </Reveal>
 
       <Reveal delay={0.06}>

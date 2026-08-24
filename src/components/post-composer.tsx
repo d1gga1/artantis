@@ -11,6 +11,7 @@ import { createPost } from "@/lib/actions";
 import type { Profile } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { AUTHOR_NAME } from "@/lib/brand";
+import { Firma } from "@/components/firma";
 
 const CATEGORIES = [
   "generale",
@@ -80,6 +81,8 @@ export function PostComposer({ profile }: { profile: Profile }) {
           <Clock size={14} className="text-signal-warn" />
           Stato attuale: in revisione
         </div>
+
+        <Firma variante="riga" className="mt-6 text-[13px]" />
 
         <div className="mt-8 flex flex-col justify-center gap-2.5 sm:flex-row">
           <Link href="/area-personale" className="btn-primary">

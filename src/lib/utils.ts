@@ -2,9 +2,31 @@ export function cn(...classes: (string | false | null | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+/**
+ * Titoli professionali da ignorare quando si estraggono nome e iniziali:
+ * "Dott. Vincenzo Silvano" deve dare "Vincenzo" e "VS", non "Dott." e "DV".
+ */
+const TITOLI = /^(dott\.?ssa|dott\.?|dr\.?ssa|dr\.?|prof\.?ssa|prof\.?|ing\.?|avv\.?|arch\.?)$/i;
+
+/** Il nome senza il titolo davanti. */
+export function nomeSenzaTitolo(name?: string | null) {
+  if (!name) return "";
+  return name
+    .trim()
+    .split(/\s+/)
+    .filter((p) => !TITOLI.test(p))
+    .join(" ");
+}
+
+/** Solo il nome di battesimo, per i saluti. */
+export function nomeProprio(name?: string | null, fallback = "") {
+  return nomeSenzaTitolo(name).split(" ")[0] || fallback;
+}
+
 export function initials(name?: string | null, fallback = "A") {
   if (!name) return fallback;
-  const parts = name.trim().split(/\s+/).slice(0, 2);
+  const pulito = nomeSenzaTitolo(name) || name;
+  const parts = pulito.trim().split(/\s+/).slice(0, 2);
   const value = parts.map((p) => p[0]).join("").toUpperCase();
   return value || fallback;
 }
