@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Avatar } from "@/components/avatar";
 import { Wordmark } from "@/components/wordmark";
+import { NotificationBell } from "@/components/notification-bell";
 import { signOut } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 import type { Profile } from "@/lib/types";
@@ -92,6 +93,8 @@ export function SiteHeader({ profile }: { profile: Profile | null }) {
               <PenLine size={15} strokeWidth={2.2} />
               Pubblica
             </Link>
+
+            {profile && <NotificationBell />}
 
             {profile ? (
               <div className="relative" ref={menuRef}>

@@ -81,3 +81,21 @@ export type CommentWithAuthor = {
   author_id: string;
   author: Pick<Profile, "id" | "username" | "full_name" | "avatar_url"> | null;
 };
+
+export type NotificationType =
+  | "post_approved"
+  | "post_rejected"
+  | "like"
+  | "comment"
+  | "repost"
+  | "follow";
+
+export type AppNotification = {
+  id: string;
+  type: NotificationType;
+  read: boolean;
+  created_at: string;
+  post_id: string | null;
+  actor: Pick<Profile, "id" | "username" | "full_name" | "avatar_url" | "profession"> | null;
+  post: { id: string; title: string | null } | null;
+};

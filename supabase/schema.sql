@@ -105,6 +105,35 @@ create table if not exists public.follows (
 create index if not exists follows_following_idx on public.follows (following_id);
 
 -- -----------------------------------------------------------------------------
+-- 4-bis. NOTIFICHE
+-- -----------------------------------------------------------------------------
+create table if not exists public.notifications (
+  id         uuid primary key default gen_random_uuid(),
+  user_id    uuid not null references public.profiles(id) on delete cascade,  -- chi la riceve
+  actor_id   uuid references public.profiles(id) on delete cascade,           -- chi l'ha provocata
+  type       text not null,
+  post_id    uuid references public.posts(id) on delete cascade,
+  read       boolean not null default false,
+  created_at timestamptz not null default now(),
+  constraint notification_type_valid check (type in (
+    'post_approved','post_rejected','like','comment','repost','follow'
+  ))
+);
+
+create index if not exists notifications_inbox_idx
+  on public.notifications (user_id, created_at desc);
+create index if not exists notifications_unread_idx
+  on public.notifications (user_id) where read = false;
+
+-- Evita il diluvio: se qualcuno toglie e rimette un apprezzamento, la notifica
+-- resta una sola. Stessa cosa per follow e ricondivisioni.
+create unique index if not exists notifications_dedup_idx on public.notifications (
+  user_id, type,
+  coalesce(actor_id, '00000000-0000-0000-0000-000000000000'::uuid),
+  coalesce(post_id,  '00000000-0000-0000-0000-000000000000'::uuid)
+);
+
+-- -----------------------------------------------------------------------------
 -- 5. FUNZIONI DI SUPPORTO (security definer: leggono ignorando le RLS,
 --    servono a evitare ricorsioni infinite nelle policy)
 -- -----------------------------------------------------------------------------
@@ -337,6 +366,98 @@ create trigger profiles_guard_update before update on public.profiles
   for each row execute function public.guard_profile_update();
 
 -- -----------------------------------------------------------------------------
+-- 7-bis. CHI RICEVE COSA
+--   Le notifiche nascono solo qui dentro: nessun client può fabbricarle.
+-- -----------------------------------------------------------------------------
+create or replace function public.notify(
+  p_user uuid, p_actor uuid, p_type text, p_post uuid
+) returns void language plpgsql security definer set search_path = public as $$
+begin
+  -- nessuno viene avvisato delle proprie azioni
+  if p_user is null or p_user = p_actor then return; end if;
+
+  insert into public.notifications (user_id, actor_id, type, post_id)
+  values (p_user, p_actor, p_type, p_post)
+  on conflict do nothing;
+end;
+$$;
+
+create or replace function public.notify_like()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  perform public.notify(
+    (select author_id from public.posts where id = new.post_id),
+    new.user_id, 'like', new.post_id
+  );
+  return null;
+end;
+$$;
+drop trigger if exists likes_notify on public.likes;
+create trigger likes_notify after insert on public.likes
+  for each row execute function public.notify_like();
+
+create or replace function public.notify_comment()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  perform public.notify(
+    (select author_id from public.posts where id = new.post_id),
+    new.author_id, 'comment', new.post_id
+  );
+  return null;
+end;
+$$;
+drop trigger if exists comments_notify on public.comments;
+create trigger comments_notify after insert on public.comments
+  for each row execute function public.notify_comment();
+
+create or replace function public.notify_repost()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  perform public.notify(
+    (select author_id from public.posts where id = new.post_id),
+    new.user_id, 'repost', new.post_id
+  );
+  return null;
+end;
+$$;
+drop trigger if exists reposts_notify on public.reposts;
+create trigger reposts_notify after insert on public.reposts
+  for each row execute function public.notify_repost();
+
+create or replace function public.notify_follow()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  perform public.notify(new.following_id, new.follower_id, 'follow', null);
+  return null;
+end;
+$$;
+drop trigger if exists follows_notify on public.follows;
+create trigger follows_notify after insert on public.follows
+  for each row execute function public.notify_follow();
+
+-- L'esito della revisione: l'autore viene avvisato in entrambi i casi.
+create or replace function public.notify_decision()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if new.status = old.status then return null; end if;
+
+  if new.status = 'approved' then
+    insert into public.notifications (user_id, actor_id, type, post_id)
+    values (new.author_id, new.reviewed_by, 'post_approved', new.id)
+    on conflict do nothing;
+  elsif new.status = 'rejected' then
+    insert into public.notifications (user_id, actor_id, type, post_id)
+    values (new.author_id, new.reviewed_by, 'post_rejected', new.id)
+    on conflict do nothing;
+  end if;
+  return null;
+end;
+$$;
+drop trigger if exists posts_notify_decision on public.posts;
+create trigger posts_notify_decision after update on public.posts
+  for each row execute function public.notify_decision();
+
+-- -----------------------------------------------------------------------------
 -- 8. ROW LEVEL SECURITY
 -- -----------------------------------------------------------------------------
 alter table public.profiles   enable row level security;
@@ -346,6 +467,7 @@ alter table public.likes      enable row level security;
 alter table public.comments   enable row level security;
 alter table public.reposts    enable row level security;
 alter table public.follows    enable row level security;
+alter table public.notifications enable row level security;
 
 -- PROFILI: schede pubbliche, modificabili solo dal proprietario.
 drop policy if exists profiles_read on public.profiles;
@@ -445,6 +567,19 @@ drop policy if exists follows_delete on public.follows;
 create policy follows_delete on public.follows for delete
   using (auth.uid() = follower_id);
 
+-- NOTIFICHE: ciascuno vede soltanto le proprie, e può solo segnarle come lette.
+drop policy if exists notifications_read on public.notifications;
+create policy notifications_read on public.notifications for select
+  using (user_id = auth.uid());
+
+drop policy if exists notifications_update_own on public.notifications;
+create policy notifications_update_own on public.notifications for update
+  using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+drop policy if exists notifications_delete_own on public.notifications;
+create policy notifications_delete_own on public.notifications for delete
+  using (user_id = auth.uid());
+
 -- -----------------------------------------------------------------------------
 -- 8-bis. PERMESSI SULLE COLONNE
 -- I contatori (like, commenti, follower...) sono gestiti solo dal database:
@@ -465,6 +600,11 @@ grant update (title, content, category, status, rejection_reason) on public.post
 
 grant select on public.post_media, public.likes, public.comments, public.reposts, public.follows
   to anon, authenticated;
+
+-- le notifiche non si creano da fuori: si leggono, si segnano lette, si eliminano
+revoke all on public.notifications from anon, authenticated;
+grant select, delete on public.notifications to authenticated;
+grant update (read) on public.notifications to authenticated;
 grant insert, delete on public.post_media, public.likes, public.comments, public.reposts, public.follows
   to authenticated;
 

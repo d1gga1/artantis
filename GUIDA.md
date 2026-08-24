@@ -145,6 +145,11 @@ Un sito vuoto non si valuta bene. Con un passaggio puoi popolarlo con tre profil
 italiani completi — una ricercatrice, un cardiologo, una pittrice — che hanno già
 i loro contenuti pubblicati, si seguono a vicenda e si commentano.
 
+Lo stesso comando mette anche **cinque proposte in attesa** nella coda di Vincenzo,
+di qualità volutamente diversa fra loro: due da pubblicare a occhi chiusi, una da
+valutare, una troppo scarna, una promozionale. Servono a provare davvero il
+pannello di moderazione, non solo a vederlo pieno.
+
 1. Supabase → **SQL Editor** → **New query**
 2. Apri sul computer il file `supabase/utenti-di-prova.sql`, seleziona tutto, copia
 3. Incolla e clicca **Run**
@@ -192,6 +197,13 @@ potrebbe pubblicare qualcosa saltando la revisione.
 ---
 
 ## Domande frequenti
+
+**Come funzionano le notifiche?**
+In alto a destra c'è una campanella. Quando arriva qualcosa compare un pallino rosso
+con il numero, e per qualche secondo si affaccia un riquadro sulla destra. Arrivano
+quando la direzione editoriale approva o rifiuta una proposta, e quando qualcuno
+mette un apprezzamento, commenta, ricondivide o inizia a seguire. Il sito controlla
+se c'è qualcosa di nuovo ogni venticinque secondi e appena si torna sulla scheda.
 
 **Dove vedo tutti gli iscritti?**
 Nella voce **Membri** della barra in alto. Ci sono tutti, in ordine: prima chi ha

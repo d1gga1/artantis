@@ -1,4 +1,4 @@
-import type { CommentWithAuthor, Post, Profile } from "@/lib/types";
+import type { AppNotification, CommentWithAuthor, Post, Profile } from "@/lib/types";
 
 const base = (over: Partial<Profile>): Profile => ({
   id: "p0",
@@ -197,31 +197,77 @@ export const DEMO_POSTS: Post[] = [
 
 export const DEMO_PENDING: Post[] = [
   {
-    ...DEMO_POSTS[1],
+    ...DEMO_POSTS[0],
     id: "pending1",
     status: "pending",
     published_at: null,
-    title: "Serie \"Interni\" — tre studi preparatori",
+    title: "Perché abbiamo rifatto lo studio da capo",
     content:
-      "Vorrei proporre tre studi a carboncino realizzati prima della tela grande. Sono lavori di passaggio, ma raccontano meglio del quadro finito come si arriva a una composizione.",
-    like_count: 0,
-    comment_count: 0,
-    repost_count: 0,
-    created_at: "2026-08-23T07:40:00Z",
-  },
-  {
-    ...DEMO_POSTS[3],
-    id: "pending2",
-    status: "pending",
-    published_at: null,
-    title: "Preparazioni magistrali: cosa può e cosa non può fare una farmacia",
-    content:
-      "Un chiarimento necessario, perché le richieste che ricevo al banco sono spesso fuori da ciò che la legge consente. Elenco i casi più frequenti e cosa si può proporre in alternativa.",
+      "Il primo campione era sbilanciato: 68 partecipanti su 90 venivano dalla stessa area urbana. Ce ne siamo accorti al momento dell'analisi, non prima, e questo è già un errore nostro.\n\nAbbiamo rifatto il reclutamento su quattro province, allungando i tempi di otto mesi. I risultati che ne escono sono più deboli di quelli iniziali: l'effetto c'è ma è circa la metà.\n\nPubblico anche questo perché la parte che non funziona è quella da cui si impara.",
+    category: "ricerca",
     media: [],
     like_count: 0,
     comment_count: 0,
     repost_count: 0,
-    created_at: "2026-08-23T06:10:00Z",
+    created_at: "2026-08-23T12:10:00Z",
+  },
+  {
+    ...DEMO_POSTS[2],
+    id: "pending2",
+    status: "pending",
+    published_at: null,
+    title: "Il mito dei diecimila passi",
+    content:
+      "La cifra non viene da uno studio: viene da una campagna pubblicitaria giapponese del 1965 per un contapassi che si chiamava, letteralmente, \"misuratore dei diecimila passi\".\n\nQuesto non vuol dire che camminare non serva. Vuol dire che la soglia è arbitraria. I lavori più recenti trovano un beneficio già intorno ai quattromila passi al giorno.",
+    category: "divulgazione",
+    media: [],
+    like_count: 0,
+    comment_count: 0,
+    repost_count: 0,
+    created_at: "2026-08-23T17:30:00Z",
+  },
+  {
+    ...DEMO_POSTS[1],
+    id: "pending3",
+    status: "pending",
+    published_at: null,
+    title: "Serie \"Interni\" — tre studi preparatori",
+    content:
+      "Vorrei proporre tre studi a carboncino realizzati prima della tela grande. Sono lavori di passaggio, non opere finite, ma raccontano meglio del quadro definitivo come si arriva a una composizione.\n\nIl terzo è quello in cui ho capito che la finestra andava spostata di quaranta centimetri.",
+    category: "processo creativo",
+    like_count: 0,
+    comment_count: 0,
+    repost_count: 0,
+    created_at: "2026-08-23T22:40:00Z",
+  },
+  {
+    ...DEMO_POSTS[0],
+    id: "pending4",
+    status: "pending",
+    published_at: null,
+    title: "Nuovo articolo in uscita",
+    content: "A breve esce il nostro nuovo lavoro. Vi aggiorno appena posso.",
+    category: "annuncio",
+    media: [],
+    like_count: 0,
+    comment_count: 0,
+    repost_count: 0,
+    created_at: "2026-08-24T02:20:00Z",
+  },
+  {
+    ...DEMO_POSTS[1],
+    id: "pending5",
+    status: "pending",
+    published_at: null,
+    title: "Laboratorio di ritratto dal vero — iscrizioni aperte",
+    content:
+      "Sei incontri di tre ore, il sabato mattina, nel mio studio a Prato. Massimo otto persone, modello dal vero a ogni incontro.\n\nNon serve esperienza precedente ma serve la voglia di sbagliare parecchio nelle prime due settimane.\n\nCosto e date nei commenti, oppure scrivetemi in privato.",
+    category: "annuncio",
+    media: [],
+    like_count: 0,
+    comment_count: 0,
+    repost_count: 0,
+    created_at: "2026-08-24T05:15:00Z",
   },
 ];
 
@@ -250,5 +296,62 @@ export const DEMO_COMMENTS: CommentWithAuthor[] = [
       full_name: "Nadia Ricci",
       avatar_url: null,
     },
+  },
+];
+
+export const DEMO_NOTIFICATIONS: AppNotification[] = [
+  {
+    id: "n1",
+    type: "post_approved",
+    read: false,
+    created_at: "2026-08-24T07:40:00Z",
+    post_id: "post2",
+    actor: who("vincenzosilva"),
+    post: { id: "post2", title: "Stanza con finestra a nord" },
+  },
+  {
+    id: "n2",
+    type: "like",
+    read: false,
+    created_at: "2026-08-24T06:10:00Z",
+    post_id: "post1",
+    actor: who("marcolanza"),
+    post: { id: "post1", title: "Quello che i nostri dati dicono davvero sul microbiota" },
+  },
+  {
+    id: "n3",
+    type: "comment",
+    read: false,
+    created_at: "2026-08-24T04:25:00Z",
+    post_id: "post1",
+    actor: who("nadiaricci"),
+    post: { id: "post1", title: "Quello che i nostri dati dicono davvero sul microbiota" },
+  },
+  {
+    id: "n4",
+    type: "follow",
+    read: true,
+    created_at: "2026-08-23T19:05:00Z",
+    post_id: null,
+    actor: who("saradonati"),
+    post: null,
+  },
+  {
+    id: "n5",
+    type: "repost",
+    read: true,
+    created_at: "2026-08-23T12:30:00Z",
+    post_id: "post3",
+    actor: who("pietroamato"),
+    post: { id: "post3", title: "Come si legge un referto cardiologico senza spaventarsi" },
+  },
+  {
+    id: "n6",
+    type: "post_rejected",
+    read: true,
+    created_at: "2026-08-22T16:00:00Z",
+    post_id: "pending4",
+    actor: who("vincenzosilva"),
+    post: { id: "pending4", title: "Nuovo articolo in uscita" },
   },
 ];

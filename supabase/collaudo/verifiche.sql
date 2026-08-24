@@ -105,5 +105,38 @@ select like_count from public.posts where id = 'aaaaaaa1-0000-0000-0000-00000000
 delete from public.posts where id = 'aaaaaaa1-0000-0000-0000-000000000001';
 select count(*) as post_ancora_presente from public.posts where id = 'aaaaaaa1-0000-0000-0000-000000000001';
 
+\echo '--- 18. Ogni tabella deve avere la sicurezza a livello di riga ATTIVA'
+\echo '     (le policy da sole non bastano: senza questa riga non filtrano nulla)'
+reset role;
+select relname as tabella, relrowsecurity as protezione_attiva
+from pg_class
+where relnamespace = 'public'::regnamespace
+  and relname in ('profiles','posts','post_media','likes','comments','reposts','follows','notifications')
+order by relname;
+
+\echo '--- 19. Le notifiche: ciascuno vede soltanto le proprie'
+insert into public.notifications (user_id, actor_id, type)
+values ('11111111-1111-1111-1111-111111111111','22222222-2222-2222-2222-222222222222','follow'),
+       ('22222222-2222-2222-2222-222222222222','11111111-1111-1111-1111-111111111111','follow')
+on conflict do nothing;
+
+set role authenticated;
+set test.uid = '11111111-1111-1111-1111-111111111111';
+select count(*) as notifiche_viste_da_anna from public.notifications;
+reset role;
+select count(*) as notifiche_totali_nel_database from public.notifications;
+
+\echo '--- 20. Nessuno puo fabbricare notifiche per altri'
+set role authenticated;
+set test.uid = '11111111-1111-1111-1111-111111111111';
+do $$
+begin
+  insert into public.notifications (user_id, type)
+  values ('33333333-3333-3333-3333-333333333333','like');
+  raise notice 'PROBLEMA: notifica fabbricata a mano';
+exception when others then
+  raise notice 'OK: creazione di notifiche bloccata';
+end $$;
+
 reset role;
 \echo '--- COLLAUDO COMPLETATO ---'

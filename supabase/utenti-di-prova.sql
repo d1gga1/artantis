@@ -212,8 +212,71 @@ values
    (select id from public.profiles where username = 'sofiamarchetti'),
    'Le prime dieci sbagliate sono la parte che mi interessa di più. Le mostrerai mai?');
 
+-- -----------------------------------------------------------------------------
+-- 7. Cinque proposte in attesa, per la coda di moderazione
+--
+--    Restano in stato "pending" da sole: la regola del database impone che
+--    ogni post nasca in attesa, e qui non le approviamo. Compaiono solo a
+--    Vincenzo, nella sezione Moderazione, e ai rispettivi autori.
+--
+--    Sono volutamente di qualità diversa fra loro, così la coda somiglia a
+--    una coda vera: due da pubblicare a occhi chiusi, una da valutare, una
+--    troppo scarna, una promozionale.
+-- -----------------------------------------------------------------------------
+insert into public.posts (id, author_id, title, content, category, created_at)
+values
+  -- 1. Solida: dati, metodo, limiti dichiarati
+  ('c1000000-0000-4000-8000-000000000001',
+   (select id from public.profiles where username = 'sofiamarchetti'),
+   'Perché abbiamo rifatto lo studio da capo',
+   'Il primo campione era sbilanciato: 68 partecipanti su 90 venivano dalla stessa area urbana. Ce ne siamo accorti al momento dell''analisi, non prima, e questo è già un errore nostro.
+
+Abbiamo rifatto il reclutamento su quattro province, allungando i tempi di otto mesi. I risultati che ne escono sono più deboli di quelli iniziali: l''effetto c''è ma è circa la metà.
+
+Pubblico anche questo perché la parte che non funziona è quella da cui si impara. Chi legge solo gli studi riusciti si fa un''idea sbagliata di come vada la ricerca.',
+   'ricerca', now() - interval '19 hours'),
+
+  -- 2. Solida: divulgazione utile, tono giusto
+  ('c1000000-0000-4000-8000-000000000002',
+   (select id from public.profiles where username = 'davidecolombo'),
+   'Il mito dei diecimila passi',
+   'La cifra non viene da uno studio: viene da una campagna pubblicitaria giapponese del 1965 per un contapassi che si chiamava, letteralmente, "misuratore dei diecimila passi".
+
+Questo non vuol dire che camminare non serva. Vuol dire che la soglia è arbitraria. I lavori più recenti trovano un beneficio già intorno ai quattromila passi al giorno, con una curva che continua a migliorare fino a settemila-ottomila e poi si appiattisce.
+
+Se camminate seimila passi al giorno e vi sentite in colpa per non arrivare a diecimila, potete smettere di sentirvi in colpa.',
+   'divulgazione', now() - interval '14 hours'),
+
+  -- 3. Da valutare: bella ma servono i riferimenti dell'opera
+  ('c1000000-0000-4000-8000-000000000003',
+   (select id from public.profiles where username = 'chiarabruno'),
+   'Serie "Interni" — tre studi preparatori',
+   'Vorrei proporre tre studi a carboncino realizzati prima della tela grande. Sono lavori di passaggio, non opere finite, ma raccontano meglio del quadro definitivo come si arriva a una composizione.
+
+Il terzo è quello in cui ho capito che la finestra andava spostata di quaranta centimetri.',
+   'processo creativo', now() - interval '9 hours'),
+
+  -- 4. Troppo scarna: da rimandare all'autore
+  ('c1000000-0000-4000-8000-000000000004',
+   (select id from public.profiles where username = 'sofiamarchetti'),
+   'Nuovo articolo in uscita',
+   'A breve esce il nostro nuovo lavoro. Vi aggiorno appena posso.',
+   'annuncio', now() - interval '5 hours'),
+
+  -- 5. Promozionale: decisione di linea editoriale
+  ('c1000000-0000-4000-8000-000000000005',
+   (select id from public.profiles where username = 'chiarabruno'),
+   'Laboratorio di ritratto dal vero — iscrizioni aperte',
+   'Sei incontri di tre ore, il sabato mattina, nel mio studio a Prato. Massimo otto persone, modello dal vero a ogni incontro.
+
+Non serve esperienza precedente ma serve la voglia di sbagliare parecchio nelle prime due settimane.
+
+Costo e date nei commenti, oppure scrivetemi in privato.',
+   'annuncio', now() - interval '2 hours');
+
 -- =============================================================================
--- FATTO. Ora sul sito compaiono tre membri con i loro contenuti.
+-- FATTO. Ora sul sito compaiono tre membri con i loro contenuti,
+-- e nella sezione Moderazione cinque proposte in attesa di decisione.
 --
 -- Accesso di prova:
 --   sofia.marchetti@artantis.test   /  artantis2026

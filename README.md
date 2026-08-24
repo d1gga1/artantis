@@ -26,6 +26,10 @@ editoriale prima di comparire nel feed**.
 - **Esplora** — directory dei profili con ricerca e filtro per disciplina.
 - **Membri** — elenco completo degli iscritti con distintivo di ruolo: `ADMIN` per la
   direzione editoriale, `MEMBRO` per tutti gli altri, più la disciplina di ciascuno.
+- **Notifiche** — campanella con pallino rosso e conteggio, pannello a tendina e
+  riquadro temporaneo in alto a destra all'arrivo di una novità. Le notifiche nascono
+  da trigger nel database (esito della revisione, apprezzamenti, commenti,
+  ricondivisioni, nuovi follower): nessun client può fabbricarle.
 
 ## Colore e movimento
 
@@ -101,7 +105,8 @@ src/
     actions.ts                scritture (Server Actions)
 supabase/
   schema.sql                  struttura completa: tabelle, regole, permessi, archivio file
-  utenti-di-prova.sql         tre profili italiani completi, con contenuti e collegamenti
+  utenti-di-prova.sql         tre profili italiani completi, con contenuti, collegamenti
+                              e cinque proposte in coda di moderazione
   collaudo/                   verifica locale delle regole di sicurezza
 ```
 
@@ -114,10 +119,14 @@ Le regole non stanno nell'interfaccia ma nel database (Row Level Security):
 - nessuno può nominarsi amministratore modificando il proprio profilo;
 - i contatori (apprezzamenti, commenti, follower) non sono scrivibili dagli utenti;
 - gli elenchi follower/seguiti sono leggibili solo da chi segue quel profilo;
-- nell'archivio file ciascuno scrive solo nella propria cartella.
+- nell'archivio file ciascuno scrive solo nella propria cartella;
+- le notifiche sono leggibili solo dal destinatario e non sono creabili dai client:
+  nascono unicamente dai trigger del database.
 
 Queste regole sono verificate da `supabase/collaudo/verifiche.sql`, che simula quattro
-utenti diversi (un autore, due lettori, l'amministratore) e controlla 17 comportamenti.
+utenti diversi (un autore, due lettori, l'amministratore) e controlla 20 comportamenti,
+compreso che la sicurezza a livello di riga sia **attiva** su ogni tabella: le policy
+da sole non filtrano nulla se quella riga manca.
 
 ## Sviluppo in locale
 
