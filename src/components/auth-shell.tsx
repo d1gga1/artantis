@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Wordmark } from "@/components/wordmark";
 import { FadeIn } from "@/components/motion";
 import { AUTH_PANEL } from "@/lib/covers";
-import { Aurora } from "@/components/aurora";
+import { LivingBackground } from "@/components/living-background";
 
 export function AuthShell({
   title,
@@ -20,7 +20,7 @@ export function AuthShell({
       <aside className="relative hidden overflow-hidden border-r border-line bg-paper-warm lg:block">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={AUTH_PANEL} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <Aurora intensity={1.5} />
+        <LivingBackground intensity={1.15} density={0.8} />
         <div className="absolute inset-0 bg-gradient-to-br from-white/55 via-white/30 to-white/70" aria-hidden />
         <div className="relative flex h-full flex-col justify-between p-12">
           <Wordmark size="lg" subtitle={false} />

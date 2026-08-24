@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
-import { Aurora } from "@/components/aurora";
+import { LivingBackground } from "@/components/living-background";
 import { ReviewFlow } from "@/components/review-flow";
 import { PROFESSIONS } from "@/lib/types";
 import { tint } from "@/lib/palette";
@@ -20,8 +20,28 @@ export function Hero() {
 
   return (
     <section ref={ref} className="relative overflow-hidden border-b border-line">
-      <Aurora />
-      <div className="grid-canvas absolute inset-0 mask-fade-b opacity-60" aria-hidden />
+      <div className="absolute inset-0" aria-hidden>
+        <LivingBackground intensity={1} density={1} />
+      </div>
+      <div className="grid-canvas pointer-events-none absolute inset-0 mask-fade-b opacity-40" aria-hidden />
+      {/* velo che tiene il testo perfettamente leggibile sopra il movimento */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-white/20 to-white/0"
+        aria-hidden
+      />
+      {/* alone bianco sotto il blocco di testo: la rete resta viva attorno, le parole restano nitide */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(62% 68% at 27% 50%, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.6) 45%, rgba(255,255,255,0) 74%)",
+        }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-paper to-transparent"
+        aria-hidden
+      />
 
       <motion.div style={{ y, opacity }} className="container-page relative py-20 sm:py-28">
         <div className="grid items-start gap-14 lg:grid-cols-[minmax(0,1fr)_360px]">

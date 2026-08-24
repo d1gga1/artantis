@@ -32,10 +32,22 @@ su etichette, iniziali degli avatar, filtri, aloni delle schede e copertine di r
 il sito resta chiaro e leggibile, ma un contenuto di pittura si distingue a colpo
 d'occhio da uno di farmacia.
 
-Il movimento è tutto in `framer-motion` e rispetta `prefers-reduced-motion`:
-sfondo animato a macchie di colore (`aurora.tsx`), barra di avanzamento della lettura,
+Lo sfondo è vivo: `living-background.tsx` disegna su canvas una rete di nodi alla
+deriva che si collegano quando si avvicinano, con impulsi colorati che corrono lungo
+i collegamenti e campi di colore che si spostano lentamente. Il puntatore scosta i
+nodi vicini, quindi la pagina reagisce a chi la guarda.
+
+Accorgimenti perché resti fluido: i campi di colore sono dipinti su una tela di
+servizio a un quinto della risoluzione e ridisegnati un fotogramma su cinque, il
+canvas è limitato a 1,5× di densità di pixel, i nodi sono al massimo 78, e
+l'animazione si ferma da sola quando la scheda del browser passa in secondo piano.
+Misurato a 60 fps anche senza accelerazione grafica.
+
+Il resto del movimento è in `framer-motion`: barra di avanzamento della lettura,
 titoli che salgono a scaglioni, numeri che contano, schede che si sollevano con un
 alone del proprio colore, filo colorato che attraversa la scheda al passaggio del mouse.
+Tutto rispetta `prefers-reduced-motion`: chi ha chiesto meno animazioni vede una
+versione ferma.
 
 ## Impianto tecnico
 
