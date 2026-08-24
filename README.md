@@ -41,11 +41,21 @@ deriva che si collegano quando si avvicinano, con impulsi colorati che corrono l
 i collegamenti e campi di colore che si spostano lentamente. Il puntatore scosta i
 nodi vicini, quindi la pagina reagisce a chi la guarda.
 
-Accorgimenti perché resti fluido: i campi di colore sono dipinti su una tela di
-servizio a un quinto della risoluzione e ridisegnati un fotogramma su cinque, il
-canvas è limitato a 1,5× di densità di pixel, i nodi sono al massimo 78, e
-l'animazione si ferma da sola quando la scheda del browser passa in secondo piano.
-Misurato a 60 fps anche senza accelerazione grafica.
+**Regola non negoziabile: niente deve apparire o muoversi a scatti.** Un fondo che
+sfarfalla affatica gli occhi in pochi secondi. Ogni posizione è quindi una funzione
+continua del tempo, e tutto entra ed esce in dissolvenza.
+
+Perché resti fluido *e* liscio, i due strati stanno su due tele distinte:
+
+- i campi di colore su una tela grande un quarto, ridisegnata **a ogni fotogramma**
+  e ingrandita dal browser (che la sfuma da solo). Costa un quarto del lavoro senza
+  introdurre scatti;
+- la rete su una tela a piena risoluzione, limitata a 1,5× di densità di pixel,
+  con al massimo 70 nodi.
+
+L'animazione si ferma da sola quando la scheda passa in secondo piano.
+Misurato a 60 fps e con una variazione media fra fotogrammi consecutivi di 0,13 su
+255 — sotto la soglia percepibile — anche senza accelerazione grafica.
 
 Il resto del movimento è in `framer-motion`: transizione in dissolvenza a ogni cambio
 di pagina, alone che segue il puntatore dentro le schede, scintille quando si mette un

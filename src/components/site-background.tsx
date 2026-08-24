@@ -10,9 +10,9 @@ import { LivingBackground } from "@/components/living-background";
 export function SiteBackground() {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden" aria-hidden>
-      <LivingBackground intensity={0.9} density={0.62} />
+      <LivingBackground intensity={0.72} density={0.55} />
       {/* velo che tiene tutto leggibile: la rete si vede, il testo vince sempre */}
-      <div className="absolute inset-0 bg-white/58" />
+      <div className="absolute inset-0 bg-white/64" />
     </div>
   );
 }
