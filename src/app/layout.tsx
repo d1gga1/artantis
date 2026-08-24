@@ -14,13 +14,13 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export const metadata: Metadata = {
   title: {
-    default: "ARTANTIS — by Silvano Vincenzo",
+    default: "ARTANTIS — by Dott. Vincenzo Silvano",
     template: "%s · ARTANTIS",
   },
   description:
     "ARTANTIS è lo spazio editoriale di ricercatori, medici, artisti, pittori, farmacisti e professionisti di arte e benessere. Contenuti selezionati, pubblicati dopo revisione.",
   openGraph: {
-    title: "ARTANTIS — by Silvano Vincenzo",
+    title: "ARTANTIS — by Dott. Vincenzo Silvano",
     description:
       "Ricerca, medicina, arte e benessere in un unico spazio editoriale curato.",
     type: "website",

@@ -114,12 +114,12 @@ Clicca **Save**. Senza questo passaggio l'accesso può non funzionare correttame
 
 ---
 
-## PASSO 7 — Rendi Vincenzo Silva l'amministratore
+## PASSO 7 — Rendi il Dott. Vincenzo Silvano amministratore
 
 Questo è il passaggio che attiva la moderazione.
 
 1. Apri il sito e clicca **Crea profilo**.
-2. Registra l'account di **Vincenzo Silva** con la sua email vera.
+2. Registra l'account del **Dott. Vincenzo Silvano** con la sua email vera.
 3. Torna in Supabase → **SQL Editor** → **New query** e incolla questo,
    sostituendo l'indirizzo con quello che hai appena usato:
 
@@ -187,7 +187,7 @@ Se hai comprato un dominio, per esempio `artantis.it`:
 | Chiunque, anche senza account | Leggere tutti i contenuti pubblicati, aprire i profili |
 | Chi ha un profilo | Apprezzare, commentare, ricondividere, seguire, proporre contenuti |
 | Chi segue una persona | Vedere l'elenco dei suoi follower e di chi segue |
-| Vincenzo Silva (amministratore) | Vedere ogni proposta e decidere se pubblicarla o rifiutarla |
+| Dott. Vincenzo Silvano (amministratore) | Vedere ogni proposta e decidere se pubblicarla o rifiutarla |
 
 Un contenuto proposto **non è visibile a nessuno** (tranne al suo autore e
 all'amministratore) finché non viene approvato. Questa regola è scritta dentro il

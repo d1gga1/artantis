@@ -62,8 +62,8 @@ export function SiteHeader({ profile }: { profile: Profile | null }) {
         className={cn(
           "sticky top-0 z-50 w-full transition-all duration-300",
           scrolled
-            ? "border-b border-line bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70"
-            : "border-b border-transparent bg-white/45 backdrop-blur-sm"
+            ? "border-b border-line bg-white/92 sm:bg-white/80 sm:backdrop-blur-xl sm:supports-[backdrop-filter]:bg-white/70"
+            : "border-b border-transparent bg-white/80 sm:bg-white/45 sm:backdrop-blur-sm"
         )}
       >
         <div className="container-page flex h-[68px] items-center justify-between gap-6">

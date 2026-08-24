@@ -13,14 +13,19 @@ import { useReducedMotion } from "framer-motion";
  *
  * Regola di fondo: nessun elemento appare o scompare di colpo. Tutto entra e
  * esce con una dissolvenza, e ogni posizione è una funzione continua del tempo.
- * È la ragione per cui i campi di colore sono disegnati come immagini già
- * pronte e spostate ogni fotogramma, invece di essere ridipinti a intervalli:
- * ridipingerli ogni tanto li faceva scattare, e lo scatto si legge come
- * sfarfallio.
  *
- * Il puntatore del mouse scosta i nodi vicini. L'animazione si ferma da sola
- * quando la scheda del browser passa in secondo piano o quando l'utente ha
- * chiesto meno animazioni nelle impostazioni di sistema.
+ * NOTE SUL MOBILE (correzione dello sfarfallio)
+ * ---------------------------------------------
+ * 1. Scorrendo su telefono la barra degli indirizzi si ritrae e riappare: la
+ *    finestra cambia altezza di continuo. Prima ogni cambio faceva ripartire la
+ *    scena da zero, con i nodi rigenerati a caso — ed è quello che si vedeva
+ *    come sfarfallio. Ora le misure piccole vengono ignorate e, quando serve
+ *    davvero ridimensionare, i nodi vengono riproporzionati invece che ricreati.
+ * 2. Il dito genera eventi "pointer" che restavano attivi per sempre (su touch
+ *    non arriva mai un "pointerleave"), quindi i nodi venivano spinti senza
+ *    sosta. Ora si ascolta solo il mouse vero.
+ * 3. Su schermi piccoli si disegna a densità di pixel 1, con meno nodi e a 30
+ *    fotogrammi: il telefono sta al passo e il movimento resta fluido.
  */
 
 const COLORS = [
@@ -69,33 +74,51 @@ export function LivingBackground({
     const ctx = context;
     const fctx = fieldContext;
 
-    /**
-     * I campi di colore vivono su una tela grande un quarto, che il browser
-     * ingrandisce da solo: costa un quarto del lavoro e viene sfumata
-     * gratis. Vengono ridisegnati a ogni fotogramma, quindi il movimento
-     * resta continuo — è la correzione dello sfarfallio.
-     */
-    const FIELD_SCALE = 0.25;
-
     const host = cv.parentElement;
     if (!host) return;
     const parent: HTMLElement = host;
+
+    /** Telefoni e tablet: schermo stretto oppure nessun mouse. */
+    const mobile =
+      window.matchMedia("(hover: none)").matches || window.innerWidth < 768;
+
+    /**
+     * I campi di colore vivono su una tela ridotta, che il browser ingrandisce
+     * da solo: costa una frazione del lavoro e viene sfumata gratis. Vengono
+     * ridisegnati a ogni fotogramma, quindi il movimento resta continuo.
+     */
+    const FIELD_SCALE = mobile ? 0.18 : 0.25;
+    /** Su mobile bastano 30 fotogrammi: metà lavoro, stessa impressione. */
+    const MIN_FRAME = mobile ? 32 : 0;
+    /** Distanza entro cui due nodi si collegano. */
+    const LINK = mobile ? 140 : 165;
+    /** Quanti nodi al massimo: il disegno dei collegamenti cresce col quadrato. */
+    const MAX_NODES = mobile ? 32 : 70;
 
     let w = 0, h = 0, dpr = 1;
     let nodes: Node[] = [];
     let pulses: Pulse[] = [];
     let raf = 0;
+    let resizeRaf = 0;
     let running = true;
     let clock = 0;
     const pointer = { x: -9999, y: -9999, active: false };
 
-    const LINK = 165;
-
-    function build() {
+    function measure() {
       const rect = parent.getBoundingClientRect();
-      w = Math.max(rect.width, 1);
-      h = Math.max(rect.height, 1);
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      return { mw: Math.max(rect.width, 1), mh: Math.max(rect.height, 1) };
+    }
+
+    /**
+     * Adatta le tele a una nuova misura SENZA ricreare la scena: i nodi
+     * esistenti vengono riproporzionati, così il cambio non si vede.
+     */
+    function applySize(nw: number, nh: number) {
+      const ow = w, oh = h;
+      w = nw;
+      h = nh;
+      dpr = mobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+
       cv.width = Math.floor(w * dpr);
       cv.height = Math.floor(h * dpr);
       cv.style.width = `${w}px`;
@@ -105,8 +128,19 @@ export function LivingBackground({
       fieldCv.width = Math.max(2, Math.floor(w * FIELD_SCALE));
       fieldCv.height = Math.max(2, Math.floor(h * FIELD_SCALE));
 
+      if (nodes.length && ow > 1 && oh > 1) {
+        const sx = w / ow, sy = h / oh;
+        for (const n of nodes) {
+          n.x *= sx;
+          n.y *= sy;
+        }
+      }
+    }
+
+    /** Prima semina dei nodi: avviene una volta sola. */
+    function seed() {
       const target = Math.round(((w * h) / 22000) * density);
-      const count = Math.max(14, Math.min(target, 70));
+      const count = Math.max(12, Math.min(target, MAX_NODES));
 
       nodes = Array.from({ length: count }, (_, i) => ({
         x: Math.random() * w,
@@ -239,23 +273,44 @@ export function LivingBackground({
     let last = 0;
     function frame(now: number) {
       if (!running) return;
-      const dt = last ? Math.min((now - last) / 16.67, 3) : 1;
+      raf = requestAnimationFrame(frame);
+      if (!last) last = now;
+      const elapsed = now - last;
+      if (elapsed < MIN_FRAME) return;
       last = now;
+      const dt = Math.min(elapsed / 16.67, 3);
       clock = now;
       render();
       step(dt);
-      raf = requestAnimationFrame(frame);
     }
 
-    build();
+    const first = measure();
+    applySize(first.mw, first.mh);
+    seed();
     if (reduce) render();
     else raf = requestAnimationFrame(frame);
 
+    /**
+     * Il ridimensionamento vero è raro; quello finto — la barra del browser che
+     * si ritrae mentre si scorre — è continuo. Cambiamenti di sola altezza
+     * sotto la soglia vengono ignorati: è la causa principale dello sfarfallio.
+     */
     const onResize = () => {
-      build();
-      if (reduce) render();
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(() => {
+        resizeRaf = 0;
+        const { mw, mh } = measure();
+        const dw = Math.abs(mw - w);
+        const dh = Math.abs(mh - h);
+        if (dw < 2 && dh < (mobile ? 180 : 2)) return;
+        applySize(mw, mh);
+        if (reduce) render();
+      });
     };
+
+    // Solo il mouse sposta i nodi: il dito no, altrimenti resta "incollato".
     const onPointer = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
       const rect = cv.getBoundingClientRect();
       pointer.x = e.clientX - rect.left;
       pointer.y = e.clientY - rect.top;
@@ -276,13 +331,16 @@ export function LivingBackground({
 
     const ro = new ResizeObserver(onResize);
     ro.observe(parent);
-    window.addEventListener("pointermove", onPointer, { passive: true });
-    window.addEventListener("pointerleave", onLeave);
+    if (!mobile) {
+      window.addEventListener("pointermove", onPointer, { passive: true });
+      window.addEventListener("pointerleave", onLeave);
+    }
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
       running = false;
       cancelAnimationFrame(raf);
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
       ro.disconnect();
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("pointerleave", onLeave);
@@ -290,7 +348,8 @@ export function LivingBackground({
     };
   }, [intensity, density, reduce]);
 
-  const base = className ?? "pointer-events-none absolute inset-0 h-full w-full";
+  const base =
+    className ?? "pointer-events-none absolute inset-0 h-full w-full transform-gpu";
 
   return (
     <>

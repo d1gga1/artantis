@@ -1,4 +1,4 @@
-# ARTANTIS — by Silvano Vincenzo
+# ARTANTIS — by Dott. Vincenzo Silvano
 
 Piattaforma editoriale per ricercatori, medici, artisti, pittori, farmacisti e
 professionisti di arte e benessere. Lettura libera per tutti; interazioni riservate a
@@ -17,7 +17,7 @@ editoriale prima di comparire nel feed**.
   a chi non è registrato compare un invito, non un errore.
 - **Proposta di contenuti** — testo, immagini, video e GIF (fino a 8 file per post).
   Alla pubblicazione il contenuto entra in coda di revisione.
-- **Pannello di moderazione** — riservato all'amministratore (Vincenzo Silva): coda,
+- **Pannello di moderazione** — riservato all'amministratore (Dott. Vincenzo Silvano): coda,
   anteprima completa, approvazione o rifiuto con motivazione visibile all'autore.
 - **Area personale** — bio, professione, data di nascita, telefono, email, città,
   Instagram, Facebook, sito web, immagine del profilo e copertina.

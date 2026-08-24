@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/wordmark";
 import { PROFESSIONS } from "@/lib/types";
+import { BYLINE, EDITORIAL_LINE } from "@/lib/brand";
 
 export function SiteFooter() {
   return (
-    <footer className="relative mt-24 border-t border-line bg-white/55 backdrop-blur-sm">
+    <footer className="relative mt-24 border-t border-line bg-white/85 sm:bg-white/55 sm:backdrop-blur-sm">
       <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <Wordmark subtitle={false} size="lg" />
@@ -12,8 +13,8 @@ export function SiteFooter() {
             Uno spazio curato dove ricerca, medicina, arte e benessere si incontrano.
             Ogni contenuto passa da una revisione editoriale prima di essere pubblicato.
           </p>
-          <p className="mt-6 text-[12.5px] uppercase tracking-[0.16em] text-ink-faint">
-            Direzione editoriale · Vincenzo Silva
+          <p className="mt-6 text-[13.5px] font-medium uppercase tracking-[0.14em] text-ink-soft">
+            {EDITORIAL_LINE}
           </p>
         </div>
 
@@ -72,7 +73,7 @@ export function SiteFooter() {
       <div className="border-t border-line">
         <div className="container-page flex flex-col items-center justify-between gap-2 py-6 text-[12.5px] text-ink-faint sm:flex-row">
           <p>© {new Date().getFullYear()} ARTANTIS — tutti i diritti riservati.</p>
-          <p>Progetto di Silvano Vincenzo</p>
+          <p className="text-[13.5px] font-semibold text-ink-soft">{BYLINE}</p>
         </div>
       </div>
     </footer>

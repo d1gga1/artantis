@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { BYLINE } from "@/lib/brand";
 
 export function Wordmark({
   className,
@@ -17,7 +18,13 @@ export function Wordmark({
   }[size];
 
   return (
-    <Link href="/" className={cn("group inline-flex items-baseline gap-2.5", className)}>
+    <Link
+      href="/"
+      className={cn(
+        "group inline-flex flex-col items-start leading-none sm:flex-row sm:items-baseline sm:gap-2.5",
+        className
+      )}
+    >
       <span
         className={cn(
           "font-display font-semibold uppercase tracking-[0.24em] text-ink transition-colors group-hover:text-accent-deep",
@@ -27,8 +34,8 @@ export function Wordmark({
         Artantis
       </span>
       {subtitle && (
-        <span className="hidden text-[10.5px] font-medium uppercase tracking-[0.16em] text-ink-faint sm:inline">
-          by Silvano Vincenzo
+        <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-soft sm:mt-0 sm:text-[12px]">
+          {BYLINE}
         </span>
       )}
     </Link>

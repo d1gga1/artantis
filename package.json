@@ -2,7 +2,7 @@
   "name": "artantis",
   "version": "1.0.0",
   "private": true,
-  "description": "ARTANTIS by Silvano Vincenzo — piattaforma editoriale per ricercatori, medici, artisti, pittori, arte e benessere, farmacisti.",
+  "description": "ARTANTIS by Dott. Vincenzo Silvano — piattaforma editoriale per ricercatori, medici, artisti, pittori, arte e benessere, farmacisti.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

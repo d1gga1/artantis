@@ -3,6 +3,7 @@ import { Wordmark } from "@/components/wordmark";
 import { FadeIn } from "@/components/motion";
 import { AUTH_PANEL } from "@/lib/covers";
 import { LivingBackground } from "@/components/living-background";
+import { EDITORIAL_LINE } from "@/lib/brand";
 
 export function AuthShell({
   title,
@@ -35,8 +36,8 @@ export function AuthShell({
               proposto viene letto dalla direzione editoriale prima di comparire nel feed:
               è così che lo spazio resta di qualità.
             </p>
-            <p className="mt-8 text-[12.5px] uppercase tracking-[0.16em] text-ink-faint">
-              Direzione editoriale · Vincenzo Silva
+            <p className="mt-8 text-[13.5px] font-medium uppercase tracking-[0.14em] text-ink-soft">
+              {EDITORIAL_LINE}
             </p>
           </div>
 

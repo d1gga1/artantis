@@ -27,7 +27,7 @@ export const DEMO_PROFILES: Profile[] = [
   base({
     id: "p0",
     username: "vincenzosilva",
-    full_name: "Vincenzo Silva",
+    full_name: "Dott. Vincenzo Silvano",
     profession: "altro",
     bio: "Direzione editoriale di ARTANTIS. Leggo tutto quello che viene proposto e decido cosa merita di stare nel feed.",
     city: "Roma",

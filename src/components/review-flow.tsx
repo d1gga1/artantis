@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check, Clock, Send } from "lucide-react";
+import { EDITORIAL_LINE } from "@/lib/brand";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -16,7 +17,7 @@ const STEPS = [
   {
     icon: Clock,
     title: "In revisione",
-    detail: "Direzione editoriale · Vincenzo Silva",
+    detail: EDITORIAL_LINE,
     tone: "active",
     color: "#B4562B",
   },
@@ -68,7 +69,7 @@ export function ReviewFlow() {
 
             <div className="min-w-0">
               <p className="text-[14px] font-semibold leading-tight">{step.title}</p>
-              <p className="mt-0.5 truncate text-[12.5px] text-ink-faint">{step.detail}</p>
+              <p className="mt-0.5 text-[13px] leading-snug text-ink-soft">{step.detail}</p>
             </div>
           </motion.div>
         ))}

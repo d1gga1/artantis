@@ -10,6 +10,7 @@ import { ErrorNote } from "@/components/sign-in-form";
 import { createPost } from "@/lib/actions";
 import type { Profile } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { AUTHOR_NAME } from "@/lib/brand";
 
 const CATEGORIES = [
   "generale",
@@ -71,7 +72,7 @@ export function PostComposer({ profile }: { profile: Profile }) {
         <h2 className="text-[25px] font-semibold leading-tight">Proposta inviata</h2>
         <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-ink-soft">
           Il tuo contenuto è stato trasmesso alla direzione editoriale.{" "}
-          <strong className="font-semibold text-ink">Vincenzo Silva</strong> lo esaminerà
+          <strong className="font-semibold text-ink">{AUTHOR_NAME}</strong> lo esaminerà
           e, se approvato, comparirà nel feed pubblico di ARTANTIS.
         </p>
 

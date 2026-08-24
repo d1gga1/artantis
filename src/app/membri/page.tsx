@@ -43,7 +43,7 @@ export default async function MembersPage() {
 
       <Reveal delay={0.06}>
         <div className="mt-8 flex flex-wrap items-center gap-2.5">
-          <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white/80 px-4 py-2 text-[13.5px] font-medium backdrop-blur">
+          <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white/92 px-4 py-2 text-[13.5px] font-medium sm:bg-white/80 sm:backdrop-blur">
             <Users size={14} className="text-accent" />
             <CountUp value={members.length} className="tabular-nums" />
             {members.length === 1 ? " membro" : " membri"}
@@ -54,7 +54,7 @@ export default async function MembersPage() {
               <Link
                 key={p.value}
                 href={`/esplora?professione=${p.value}`}
-                className="inline-flex items-center gap-2 rounded-full border bg-white/80 px-3.5 py-2 text-[13px] font-medium backdrop-blur transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full border bg-white/92 px-3.5 py-2 text-[13px] font-medium sm:bg-white/80 sm:backdrop-blur transition-transform hover:-translate-y-0.5"
                 style={{ borderColor: `rgba(${t.glow}, 0.28)`, color: t.deep }}
               >
                 <span className="h-1.5 w-1.5 rounded-full" style={{ background: t.ink }} />

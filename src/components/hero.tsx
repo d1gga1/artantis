@@ -7,6 +7,7 @@ import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { ReviewFlow } from "@/components/review-flow";
 import { PROFESSIONS } from "@/lib/types";
 import { tint } from "@/lib/palette";
+import { BYLINE } from "@/lib/brand";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -43,11 +44,17 @@ export function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease }}
-              className="mb-7 inline-flex items-center gap-2 rounded-full border border-line bg-white/70 px-3.5 py-1.5 backdrop-blur"
+              className="mb-7 inline-flex max-w-full items-center gap-x-2 gap-y-1 rounded-full border border-line bg-white/90 px-4 py-2 sm:bg-white/75 sm:backdrop-blur"
             >
-              <Sparkles size={13} className="text-accent" />
-              <span className="text-[12px] font-medium tracking-wide text-ink-soft">
-                Spazio editoriale curato · by Silvano Vincenzo
+              <Sparkles size={14} className="shrink-0 text-accent" />
+              <span className="hidden text-[13px] font-medium tracking-wide text-ink-soft sm:inline">
+                Spazio editoriale curato
+              </span>
+              <span className="hidden text-ink-faint sm:inline" aria-hidden>
+                ·
+              </span>
+              <span className="text-[15px] font-semibold tracking-tight text-ink">
+                {BYLINE}
               </span>
             </motion.div>
 
@@ -114,7 +121,7 @@ export function Hero() {
                   >
                     <Link
                       href={`/esplora?professione=${p.value}`}
-                      className="chip bg-white/80 backdrop-blur transition-all duration-300"
+                      className="chip bg-white/92 transition-all duration-300 sm:bg-white/80 sm:backdrop-blur"
                       style={{
                         borderColor: `rgba(${t.glow}, 0.28)`,
                         color: t.deep,
