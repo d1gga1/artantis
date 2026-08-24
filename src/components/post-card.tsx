@@ -33,12 +33,16 @@ export function PostCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.55, delay: Math.min(index, 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
-      style={tintVars(post.author?.profession)}
+      style={{
+        ...tintVars(post.author?.profession),
+        borderColor: `rgba(${t.glow}, 0.30)`,
+        backgroundImage: `linear-gradient(180deg, rgba(${t.glow},0.07) 0%, rgba(255,255,255,0) 180px)`,
+      }}
       className="group surface tint-glow spotlight relative overflow-hidden p-5 sm:p-6"
     >
-      {/* filo colorato che si allunga al passaggio del mouse */}
+      {/* filo del colore della disciplina: sempre acceso, più pieno al passaggio */}
       <span
-        className="tinted-rule absolute left-0 top-0 h-[3px] w-full origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
+        className="tinted-rule absolute left-0 top-0 h-[3px] w-full origin-left opacity-70 transition-opacity duration-500 ease-out group-hover:opacity-100"
         aria-hidden
       />
       <header className="flex items-start gap-3">

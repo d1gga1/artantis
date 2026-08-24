@@ -19,9 +19,9 @@ export function SiteBackground() {
       className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-screen isolate transform-gpu overflow-hidden"
       aria-hidden
     >
-      <LivingBackground intensity={0.72} density={0.55} />
+      <LivingBackground intensity={0.95} density={0.72} />
       {/* velo che tiene tutto leggibile: la rete si vede, il testo vince sempre */}
-      <div className="absolute inset-0 bg-white/64" />
+      <div className="absolute inset-0 bg-white/58 sm:bg-white/50" />
     </div>
   );
 }

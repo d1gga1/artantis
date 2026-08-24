@@ -93,7 +93,11 @@ function FilterChip({
           color: "#fff",
           boxShadow: `0 12px 26px -14px rgba(${tone.glow}, 0.95)`,
         }
-      : { color: tone.deep, borderColor: `rgba(${tone.glow}, 0.28)` }
+      : {
+          color: tone.deep,
+          borderColor: `rgba(${tone.glow}, 0.42)`,
+          background: `rgba(${tone.glow}, 0.11)`,
+        }
     : undefined;
 
   return (
@@ -108,7 +112,6 @@ function FilterChip({
         !tone && (active
           ? "border-accent bg-accent text-white shadow-card"
           : "border-line bg-white text-ink-soft hover:border-line-strong hover:text-ink"),
-        tone && !active && "bg-white"
       )}
     >
       {tone && (

@@ -54,8 +54,12 @@ export default async function MembersPage() {
               <Link
                 key={p.value}
                 href={`/esplora?professione=${p.value}`}
-                className="inline-flex items-center gap-2 rounded-full border bg-white/92 px-3.5 py-2 text-[13px] font-medium sm:bg-white/80 sm:backdrop-blur transition-transform hover:-translate-y-0.5"
-                style={{ borderColor: `rgba(${t.glow}, 0.28)`, color: t.deep }}
+                className="inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-[13px] font-medium transition-transform hover:-translate-y-0.5"
+                style={{
+                  borderColor: `rgba(${t.glow}, 0.42)`,
+                  color: t.deep,
+                  background: `rgba(${t.glow}, 0.11)`,
+                }}
               >
                 <span className="h-1.5 w-1.5 rounded-full" style={{ background: t.ink }} />
                 {p.label}

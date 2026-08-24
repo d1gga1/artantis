@@ -7,7 +7,7 @@ import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { ReviewFlow } from "@/components/review-flow";
 import { PROFESSIONS } from "@/lib/types";
 import { tint } from "@/lib/palette";
-import { BYLINE } from "@/lib/brand";
+import { AUTHOR_NAME } from "@/lib/brand";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -28,7 +28,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(62% 68% at 27% 50%, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.6) 45%, rgba(255,255,255,0) 74%)",
+            "radial-gradient(62% 68% at 27% 50%, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.5) 45%, rgba(255,255,255,0) 76%)",
         }}
         aria-hidden
       />
@@ -44,17 +44,14 @@ export function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease }}
-              className="mb-7 inline-flex max-w-full items-center gap-x-2 gap-y-1 rounded-full border border-line bg-white/90 px-4 py-2 sm:bg-white/75 sm:backdrop-blur"
+              className="mb-7 inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-0.5 rounded-3xl border border-line bg-white/90 px-4 py-2 sm:rounded-full sm:bg-white/75 sm:backdrop-blur"
             >
               <Sparkles size={14} className="shrink-0 text-accent" />
-              <span className="hidden text-[13px] font-medium tracking-wide text-ink-soft sm:inline">
-                Spazio editoriale curato
+              <span className="text-[13px] font-medium tracking-wide text-ink-soft">
+                Spazio editoriale curato by
               </span>
-              <span className="hidden text-ink-faint sm:inline" aria-hidden>
-                ·
-              </span>
-              <span className="text-[15px] font-semibold tracking-tight text-ink">
-                {BYLINE}
+              <span className="text-[14px] font-semibold uppercase tracking-[0.06em] text-ink">
+                {AUTHOR_NAME}
               </span>
             </motion.div>
 
@@ -90,7 +87,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.55, ease }}
               className="mt-9 flex flex-wrap items-center gap-3"
             >
-              <Link href="/registrati" className="btn-primary !px-7 !py-3 text-[15px]">
+              <Link href="/registrati" className="btn-accent !px-7 !py-3 text-[15px]">
                 Crea il tuo profilo
                 <ArrowRight size={16} />
               </Link>
@@ -105,7 +102,7 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.7 }}
               className="mt-14 flex flex-wrap items-center gap-x-2.5 gap-y-2"
             >
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium uppercase tracking-[0.14em] text-ink-faint">
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">
                 <ShieldCheck size={13} className="text-accent" />
                 Discipline
               </span>
@@ -121,11 +118,12 @@ export function Hero() {
                   >
                     <Link
                       href={`/esplora?professione=${p.value}`}
-                      className="chip bg-white/92 transition-all duration-300 sm:bg-white/80 sm:backdrop-blur"
+                      className="chip transition-all duration-300"
                       style={{
-                        borderColor: `rgba(${t.glow}, 0.28)`,
+                        borderColor: `rgba(${t.glow}, 0.42)`,
                         color: t.deep,
-                        boxShadow: `0 10px 24px -18px rgba(${t.glow}, 0.9)`,
+                        background: `rgba(${t.glow}, 0.11)`,
+                        boxShadow: `0 10px 24px -16px rgba(${t.glow}, 0.95)`,
                       }}
                     >
                       <span
