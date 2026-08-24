@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/fraunces";
 import "./globals.css";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SetupNotice } from "@/components/setup-notice";
@@ -39,6 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="flex min-h-screen flex-col">
         {configured ? (
           <>
+            <ScrollProgress />
             <SiteHeader profile={profile} />
             <main className="flex-1">{children}</main>
             <SiteFooter />

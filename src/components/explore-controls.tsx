@@ -5,6 +5,7 @@ import { useEffect, useState, useTransition } from "react";
 import { motion } from "framer-motion";
 import { Loader2, Search } from "lucide-react";
 import { PROFESSIONS } from "@/lib/types";
+import { tint } from "@/lib/palette";
 import { cn } from "@/lib/utils";
 
 export function ExploreControls() {
@@ -63,6 +64,7 @@ export function ExploreControls() {
             key={p.value}
             active={profession === p.value}
             onClick={() => setProfession(p.value)}
+            tone={tint(p.value)}
           >
             {p.label}
           </FilterChip>
@@ -76,23 +78,46 @@ function FilterChip({
   active,
   onClick,
   children,
+  tone,
 }: {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  tone?: { ink: string; deep: string; soft: string; glow: string };
 }) {
+  const style = tone
+    ? active
+      ? {
+          background: tone.ink,
+          borderColor: tone.ink,
+          color: "#fff",
+          boxShadow: `0 12px 26px -14px rgba(${tone.glow}, 0.95)`,
+        }
+      : { color: tone.deep, borderColor: `rgba(${tone.glow}, 0.28)` }
+    : undefined;
+
   return (
     <motion.button
       type="button"
       onClick={onClick}
       whileTap={{ scale: 0.96 }}
+      whileHover={{ y: -2 }}
+      style={style}
       className={cn(
-        "rounded-full border px-4 py-2 text-[13.5px] font-medium transition-all duration-200",
-        active
+        "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13.5px] font-medium transition-all duration-200",
+        !tone && (active
           ? "border-accent bg-accent text-white shadow-card"
-          : "border-line bg-white text-ink-soft hover:border-line-strong hover:text-ink"
+          : "border-line bg-white text-ink-soft hover:border-line-strong hover:text-ink"),
+        tone && !active && "bg-white"
       )}
     >
+      {tone && (
+        <span
+          className="h-1.5 w-1.5 rounded-full"
+          style={{ background: active ? "#fff" : tone.ink }}
+          aria-hidden
+        />
+      )}
       {children}
     </motion.button>
   );

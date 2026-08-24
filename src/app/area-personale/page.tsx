@@ -6,7 +6,8 @@ import { ProfileForm } from "@/components/profile-form";
 import { MyPosts } from "@/components/my-posts";
 import { Reveal } from "@/components/motion";
 import { getCurrentProfile, getPostsByAuthor } from "@/lib/queries";
-import { cn, formatCount } from "@/lib/utils";
+import { CountUp } from "@/components/count-up";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Area personale" };
 export const dynamic = "force-dynamic";
@@ -26,13 +27,14 @@ export default async function PersonalAreaPage({
   const pending = posts.filter((p) => p.status === "pending").length;
 
   const stats = [
-    { label: "Contenuti pubblicati", value: profile.post_count, icon: FileText },
-    { label: "Follower", value: profile.follower_count, icon: Users },
-    { label: "Profili seguiti", value: profile.following_count, icon: UserRound },
+    { label: "Contenuti pubblicati", value: profile.post_count, icon: FileText, c: "#0F6F8C" },
+    { label: "Follower", value: profile.follower_count, icon: Users, c: "#6D4AA8" },
+    { label: "Profili seguiti", value: profile.following_count, icon: UserRound, c: "#15704A" },
     {
       label: "Apprezzamenti ricevuti",
       value: posts.reduce((sum, p) => sum + p.like_count, 0),
       icon: Heart,
+      c: "#B4562B",
     },
   ];
 
@@ -51,11 +53,20 @@ export default async function PersonalAreaPage({
       <Reveal delay={0.06}>
         <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {stats.map((s) => (
-            <div key={s.label} className="surface p-4">
-              <s.icon size={15} className="text-accent" />
-              <p className="mt-3 font-display text-[26px] font-semibold leading-none tabular-nums">
-                {formatCount(s.value)}
-              </p>
+            <div
+              key={s.label}
+              className="surface relative overflow-hidden p-4 transition-shadow duration-300 hover:shadow-lift"
+            >
+              <span
+                className="absolute left-0 top-0 h-full w-[3px]"
+                style={{ background: s.c }}
+                aria-hidden
+              />
+              <s.icon size={15} style={{ color: s.c }} />
+              <CountUp
+                value={s.value}
+                className="mt-3 block font-display text-[26px] font-semibold leading-none tabular-nums"
+              />
               <p className="mt-1.5 text-[12px] leading-tight text-ink-faint">{s.label}</p>
             </div>
           ))}

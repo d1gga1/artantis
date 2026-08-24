@@ -1,3 +1,4 @@
+import { tint } from "@/lib/palette";
 import { cn, initials } from "@/lib/utils";
 
 const sizes = {
@@ -14,13 +15,16 @@ export function Avatar({
   size = "sm",
   className,
   ring = false,
+  profession,
 }: {
   url?: string | null;
   name?: string | null;
   size?: keyof typeof sizes;
   className?: string;
   ring?: boolean;
+  profession?: string | null;
 }) {
+  const t = tint(profession);
   const base = cn(
     "relative shrink-0 overflow-hidden rounded-full bg-paper-sunk",
     sizes[size],
@@ -35,13 +39,14 @@ export function Avatar({
 
   return (
     <div
-      className={cn(
-        base,
-        "flex items-center justify-center border border-line font-display font-semibold text-accent-deep"
-      )}
+      className={cn(base, "flex items-center justify-center border font-display font-semibold")}
+      style={{ background: t.soft, borderColor: `rgba(${t.glow}, 0.22)` }}
       aria-hidden
     >
-      <span className="bg-gradient-to-br from-accent to-accent-deep bg-clip-text text-transparent">
+      <span
+        className="bg-clip-text text-transparent"
+        style={{ backgroundImage: `linear-gradient(135deg, ${t.ink}, ${t.deep})` }}
+      >
         {initials(name)}
       </span>
     </div>

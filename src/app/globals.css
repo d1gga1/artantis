@@ -7,6 +7,11 @@
     --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
     --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
     --grid: rgba(13, 20, 32, 0.045);
+    /* tinta della disciplina: sovrascritta caso per caso dai componenti */
+    --t-ink: #0f6f8c;
+    --t-deep: #0a4f65;
+    --t-soft: #e6f2f6;
+    --t-glow: 15, 111, 140;
   }
 
   * {
@@ -162,6 +167,103 @@
   .nav-link[data-active="true"] {
     @apply text-ink;
   }
+}
+
+
+@layer components {
+  /* --- testo con sfumatura animata ------------------------------------- */
+  .text-gradient {
+    background: linear-gradient(100deg, #0F6F8C 0%, #6D4AA8 26%, #B4562B 52%, #A8497B 74%, #0F6F8C 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: driftGradient 14s ease-in-out infinite;
+  }
+
+  /* --- pulsanti con alone ---------------------------------------------- */
+  .btn-primary,
+  .btn-accent {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before,
+  .btn-accent::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.28) 50%, transparent 80%);
+    transform: translateX(-120%);
+    transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-primary:hover::before,
+  .btn-accent:hover::before {
+    transform: translateX(120%);
+  }
+
+  /* --- elementi colorati per disciplina --------------------------------- */
+  .tinted-rule {
+    background: linear-gradient(90deg, var(--t-ink), transparent 85%);
+  }
+  .tint-chip {
+    color: var(--t-deep);
+    background: var(--t-soft);
+    border-color: rgba(var(--t-glow), 0.22);
+  }
+  .hover-tint {
+    transition: color 0.3s ease;
+  }
+  .hover-tint:hover {
+    color: var(--t-deep);
+  }
+
+  .tint-glow {
+    transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .tint-glow:hover {
+    border-color: rgba(var(--t-glow), 0.35);
+    box-shadow:
+      0 2px 4px rgba(13, 20, 32, 0.04),
+      0 22px 46px -22px rgba(var(--t-glow), 0.55);
+  }
+
+  /* --- cornice luminosa che gira sul bordo ------------------------------ */
+  .halo {
+    position: relative;
+  }
+  .halo::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--angle, 0deg), transparent 55%, rgba(var(--t-glow), 0.55), transparent 80%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .halo:hover::after {
+    opacity: 1;
+    animation: spinAngle 3.2s linear infinite;
+  }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes driftGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes spinAngle {
+  to { --angle: 360deg; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FileText, PenLine, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { Hero } from "@/components/hero";
+import { TopWash } from "@/components/top-wash";
 import { PostCard } from "@/components/post-card";
 import { FeedTabs } from "@/components/feed-tabs";
 import { EmptyState } from "@/components/empty-state";
@@ -37,7 +38,9 @@ export default async function HomePage({
     <>
       {!profile && <Hero />}
 
-      <div className="container-page py-10 lg:py-14">
+      <div className="relative">
+        {profile && <TopWash />}
+      <div className="container-page relative py-10 lg:py-14">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div>
             {profile && (
@@ -104,16 +107,19 @@ export default async function HomePage({
                 </div>
                 <ol className="space-y-3.5">
                   {[
-                    "Leggere è libero: nessun account richiesto.",
-                    "Con un profilo puoi apprezzare, commentare e ricondividere.",
-                    "Chiunque può proporre un contenuto.",
-                    "La direzione editoriale lo valuta e decide se pubblicarlo.",
+                    { t: "Leggere è libero: nessun account richiesto.", c: "#0F6F8C" },
+                    { t: "Con un profilo puoi apprezzare, commentare e ricondividere.", c: "#6D4AA8" },
+                    { t: "Chiunque può proporre un contenuto.", c: "#B4562B" },
+                    { t: "La direzione editoriale lo valuta e decide se pubblicarlo.", c: "#15704A" },
                   ].map((step, i) => (
-                    <li key={step} className="flex gap-3">
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-soft text-[11px] font-semibold text-accent-deep">
+                    <li key={step.t} className="flex gap-3">
+                      <span
+                        className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold text-white"
+                        style={{ background: step.c }}
+                      >
                         {i + 1}
                       </span>
-                      <span className="text-[13.5px] leading-relaxed text-ink-soft">{step}</span>
+                      <span className="text-[13.5px] leading-relaxed text-ink-soft">{step.t}</span>
                     </li>
                   ))}
                 </ol>
@@ -161,6 +167,7 @@ export default async function HomePage({
             )}
           </aside>
         </div>
+      </div>
       </div>
     </>
   );

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Avatar } from "@/components/avatar";
 import { professionLabel, type Profile } from "@/lib/types";
 import { coverFor } from "@/lib/covers";
+import { tint, tintVars } from "@/lib/palette";
 import { formatCount } from "@/lib/utils";
 
 export function ProfileMiniCard({ profile }: { profile: Profile }) {
@@ -10,7 +11,7 @@ export function ProfileMiniCard({ profile }: { profile: Profile }) {
       href={`/profilo/${profile.username}`}
       className="flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-paper-sunk"
     >
-      <Avatar url={profile.avatar_url} name={profile.full_name} size="sm" />
+      <Avatar url={profile.avatar_url} name={profile.full_name} size="sm" profession={profile.profession} />
       <div className="min-w-0 flex-1">
         <p className="truncate text-[14px] font-medium leading-tight">
           {profile.full_name || profile.username}
@@ -27,7 +28,8 @@ export function ProfileCard({ profile }: { profile: Profile }) {
   return (
     <Link
       href={`/profilo/${profile.username}`}
-      className="surface group block overflow-hidden transition-shadow duration-300 hover:shadow-lift"
+      style={tintVars(profile.profession)}
+      className="surface tint-glow group block overflow-hidden hover:-translate-y-1"
     >
       <div className="relative h-20 bg-paper-sunk">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -39,12 +41,20 @@ export function ProfileCard({ profile }: { profile: Profile }) {
       </div>
       <div className="px-5 pb-5">
         <div className="-mt-8 mb-3">
-          <Avatar url={profile.avatar_url} name={profile.full_name} size="md" ring />
+          <Avatar url={profile.avatar_url} name={profile.full_name} size="md" ring profession={profile.profession} />
         </div>
-        <p className="truncate text-[16px] font-semibold leading-tight group-hover:text-accent-deep">
+        <p className="hover-tint truncate text-[16px] font-semibold leading-tight">
           {profile.full_name || profile.username}
         </p>
-        <p className="mt-0.5 text-[12px] uppercase tracking-[0.1em] text-accent">
+        <p
+          className="mt-0.5 inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.1em]"
+          style={{ color: tint(profile.profession).ink }}
+        >
+          <span
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ background: tint(profile.profession).ink }}
+            aria-hidden
+          />
           {professionLabel(profile.profession)}
         </p>
         {profile.bio && (

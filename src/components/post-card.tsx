@@ -7,6 +7,7 @@ import { Avatar } from "@/components/avatar";
 import { MediaGallery } from "@/components/media-gallery";
 import { InteractionBar } from "@/components/interaction-bar";
 import { professionLabel, type Post } from "@/lib/types";
+import { tint, tintVars } from "@/lib/palette";
 import { cn, timeAgo } from "@/lib/utils";
 
 export function PostCard({
@@ -24,6 +25,7 @@ export function PostCard({
 }) {
   const router = useRouter();
   const long = post.content.length > 460;
+  const t = tint(post.author?.profession);
 
   return (
     <motion.article
@@ -31,11 +33,17 @@ export function PostCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.55, delay: Math.min(index, 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
-      className="group surface p-5 transition-shadow duration-300 hover:shadow-lift sm:p-6"
+      style={tintVars(post.author?.profession)}
+      className="group surface tint-glow relative overflow-hidden p-5 sm:p-6"
     >
+      {/* filo colorato che si allunga al passaggio del mouse */}
+      <span
+        className="tinted-rule absolute left-0 top-0 h-[3px] w-full origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
+        aria-hidden
+      />
       <header className="flex items-start gap-3">
         <Link href={`/profilo/${post.author?.username ?? ""}`} className="shrink-0">
-          <Avatar url={post.author?.avatar_url} name={post.author?.full_name} size="sm" />
+          <Avatar url={post.author?.avatar_url} name={post.author?.full_name} size="sm" profession={post.author?.profession} />
         </Link>
 
         <div className="min-w-0 flex-1">
@@ -49,7 +57,11 @@ export function PostCard({
             <span className="text-[13px] text-ink-faint">·</span>
             <span className="text-[13px] text-ink-faint">{timeAgo(post.published_at ?? post.created_at)}</span>
           </div>
-          <p className="mt-0.5 text-[12.5px] uppercase tracking-[0.1em] text-accent">
+          <p
+            className="mt-0.5 inline-flex items-center gap-1.5 text-[12.5px] uppercase tracking-[0.1em]"
+            style={{ color: t.ink }}
+          >
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: t.ink }} aria-hidden />
             {professionLabel(post.author?.profession)}
           </p>
         </div>
@@ -70,7 +82,7 @@ export function PostCard({
       <div className="mt-4">
         {post.title && (
           <Link href={`/post/${post.id}`}>
-            <h2 className="mb-2 text-[21px] font-semibold leading-snug transition-colors hover:text-accent-deep sm:text-[23px]">
+            <h2 className="hover-tint mb-2 text-[21px] font-semibold leading-snug sm:text-[23px]">
               {post.title}
             </h2>
           </Link>

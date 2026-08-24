@@ -25,6 +25,18 @@ editoriale prima di comparire nel feed**.
   solo a chi segue quella persona** (regola applicata nel database, non solo nella pagina).
 - **Esplora** — directory dei profili con ricerca e filtro per disciplina.
 
+## Colore e movimento
+
+Ogni disciplina ha una propria tinta (`src/lib/palette.ts`), usata in modo coerente
+su etichette, iniziali degli avatar, filtri, aloni delle schede e copertine di riserva:
+il sito resta chiaro e leggibile, ma un contenuto di pittura si distingue a colpo
+d'occhio da uno di farmacia.
+
+Il movimento è tutto in `framer-motion` e rispetta `prefers-reduced-motion`:
+sfondo animato a macchie di colore (`aurora.tsx`), barra di avanzamento della lettura,
+titoli che salgono a scaglioni, numeri che contano, schede che si sollevano con un
+alone del proprio colore, filo colorato che attraversa la scheda al passaggio del mouse.
+
 ## Impianto tecnico
 
 | | |

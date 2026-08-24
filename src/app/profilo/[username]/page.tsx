@@ -26,6 +26,8 @@ import {
   isFollowing,
 } from "@/lib/queries";
 import { professionLabel } from "@/lib/types";
+import { tint, tintVars } from "@/lib/palette";
+import { CountUp } from "@/components/count-up";
 import { cn, formatCount, formatDateIt, socialUrl } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -106,8 +108,10 @@ export default async function ProfilePage({
     },
   ].filter(Boolean) as { icon: React.ComponentType<{ size?: number }>; text: string; href?: string }[];
 
+  const t = tint(profile.profession);
+
   return (
-    <div>
+    <div style={tintVars(profile.profession)}>
       <ProfileCover url={profile.cover_url} profession={profile.profession} />
 
       <div className="container-page max-w-5xl">
@@ -115,7 +119,7 @@ export default async function ProfilePage({
           <Reveal y={12}>
             <div className="flex flex-wrap items-end justify-between gap-5">
               <div className="flex items-end gap-5">
-                <Avatar url={profile.avatar_url} name={profile.full_name} size="xl" ring />
+                <Avatar url={profile.avatar_url} name={profile.full_name} size="xl" ring profession={profile.profession} />
                 <div className="pb-2">
                   <h1 className="text-[27px] font-semibold leading-tight sm:text-[33px]">
                     {profile.full_name || profile.username}
@@ -123,7 +127,10 @@ export default async function ProfilePage({
                   <p className="mt-1 text-[13px] text-ink-faint">
                     @{profile.username}
                     {" · "}
-                    <span className="uppercase tracking-[0.1em] text-accent">
+                    <span
+                      className="font-medium uppercase tracking-[0.1em]"
+                      style={{ color: t.ink }}
+                    >
                       {professionLabel(profile.profession)}
                     </span>
                   </p>
@@ -290,9 +297,10 @@ function Stat({
 }) {
   return (
     <Link href={href} className="group px-3 py-4 text-center transition-colors hover:bg-paper-warm">
-      <p className="whitespace-nowrap font-display text-[21px] font-semibold leading-none tabular-nums">
-        {formatCount(value)}
-      </p>
+      <CountUp
+        value={value}
+        className="block whitespace-nowrap font-display text-[21px] font-semibold leading-none tabular-nums"
+      />
       <p className="mt-1.5 inline-flex items-center gap-1 text-[12px] text-ink-faint">
         {locked && <Lock size={10} />}
         {label}
@@ -315,8 +323,9 @@ function Tab({
       href={href}
       className={cn(
         "-mb-px border-b-2 px-4 py-3 text-[14.5px] font-medium transition-colors",
-        active ? "border-accent text-ink" : "border-transparent text-ink-faint hover:text-ink-soft"
+        active ? "text-ink" : "border-transparent text-ink-faint hover:text-ink-soft"
       )}
+      style={active ? { borderColor: "var(--t-ink)" } : undefined}
     >
       {children}
     </Link>
