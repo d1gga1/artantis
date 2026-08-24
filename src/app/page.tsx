@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { FileText, PenLine, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { Hero } from "@/components/hero";
-import { TopWash } from "@/components/top-wash";
 import { PostCard } from "@/components/post-card";
 import { FeedTabs } from "@/components/feed-tabs";
 import { EmptyState } from "@/components/empty-state";
@@ -38,8 +37,6 @@ export default async function HomePage({
     <>
       {!profile && <Hero />}
 
-      <div className="relative">
-        {profile && <TopWash />}
       <div className="container-page relative py-10 lg:py-14">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div>
@@ -167,7 +164,6 @@ export default async function HomePage({
             )}
           </aside>
         </div>
-      </div>
       </div>
     </>
   );

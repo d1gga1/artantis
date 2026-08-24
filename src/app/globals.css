@@ -227,6 +227,25 @@
       0 22px 46px -22px rgba(var(--t-glow), 0.55);
   }
 
+  /* --- alone che segue il puntatore dentro la scheda --------------------- */
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      220px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(var(--t-glow), 0.12),
+      transparent 68%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+
   /* --- cornice luminosa che gira sul bordo ------------------------------ */
   .halo {
     position: relative;

@@ -7,6 +7,7 @@ import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-
 import {
   Compass,
   LayoutGrid,
+  Users,
   LogOut,
   Menu,
   PenLine,
@@ -23,6 +24,7 @@ import type { Profile } from "@/lib/types";
 const NAV = [
   { href: "/", label: "Feed", icon: LayoutGrid },
   { href: "/esplora", label: "Esplora", icon: Compass },
+  { href: "/membri", label: "Membri", icon: Users },
 ];
 
 export function SiteHeader({ profile }: { profile: Profile | null }) {
@@ -60,7 +62,7 @@ export function SiteHeader({ profile }: { profile: Profile | null }) {
           "sticky top-0 z-50 w-full transition-all duration-300",
           scrolled
             ? "border-b border-line bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70"
-            : "border-b border-transparent bg-paper"
+            : "border-b border-transparent bg-white/45 backdrop-blur-sm"
         )}
       >
         <div className="container-page flex h-[68px] items-center justify-between gap-6">

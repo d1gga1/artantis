@@ -25,6 +25,19 @@ const base = (over: Partial<Profile>): Profile => ({
 
 export const DEMO_PROFILES: Profile[] = [
   base({
+    id: "p0",
+    username: "vincenzosilva",
+    full_name: "Vincenzo Silva",
+    profession: "altro",
+    bio: "Direzione editoriale di ARTANTIS. Leggo tutto quello che viene proposto e decido cosa merita di stare nel feed.",
+    city: "Roma",
+    is_admin: true,
+    post_count: 8,
+    follower_count: 4210,
+    following_count: 128,
+    created_at: "2025-11-04T09:00:00Z",
+  }),
+  base({
     id: "p1",
     username: "elenavitali",
     full_name: "Elena Vitali",
@@ -94,13 +107,17 @@ export const DEMO_PROFILES: Profile[] = [
   }),
 ];
 
-const author = (p: Profile) => ({
-  id: p.id,
-  username: p.username,
-  full_name: p.full_name,
-  avatar_url: p.avatar_url,
-  profession: p.profession,
-});
+/** Cerca per nome utente: così l'ordine dell'elenco può cambiare senza rompere nulla. */
+const who = (username: string) => {
+  const p = DEMO_PROFILES.find((x) => x.username === username) ?? DEMO_PROFILES[0];
+  return {
+    id: p.id,
+    username: p.username,
+    full_name: p.full_name,
+    avatar_url: p.avatar_url,
+    profession: p.profession,
+  };
+};
 
 export const DEMO_POSTS: Post[] = [
   {
@@ -117,7 +134,7 @@ export const DEMO_POSTS: Post[] = [
     like_count: 342,
     comment_count: 28,
     repost_count: 61,
-    author: author(DEMO_PROFILES[0]),
+    author: who("elenavitali"),
     media: [],
   },
   {
@@ -134,7 +151,7 @@ export const DEMO_POSTS: Post[] = [
     like_count: 987,
     comment_count: 74,
     repost_count: 133,
-    author: author(DEMO_PROFILES[2]),
+    author: who("giuliaferri"),
     media: [
       { id: "m1", post_id: "post2", url: "/demo/opera-1.svg", media_type: "image", position: 0 },
       { id: "m2", post_id: "post2", url: "/demo/opera-2.svg", media_type: "image", position: 1 },
@@ -154,7 +171,7 @@ export const DEMO_POSTS: Post[] = [
     like_count: 1520,
     comment_count: 96,
     repost_count: 288,
-    author: author(DEMO_PROFILES[1]),
+    author: who("marcolanza"),
     media: [],
   },
   {
@@ -171,7 +188,7 @@ export const DEMO_POSTS: Post[] = [
     like_count: 214,
     comment_count: 12,
     repost_count: 19,
-    author: author(DEMO_PROFILES[4]),
+    author: who("pietroamato"),
     media: [
       { id: "m3", post_id: "post4", url: "/demo/opera-3.svg", media_type: "image", position: 0 },
     ],

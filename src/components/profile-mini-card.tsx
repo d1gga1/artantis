@@ -29,7 +29,7 @@ export function ProfileCard({ profile }: { profile: Profile }) {
     <Link
       href={`/profilo/${profile.username}`}
       style={tintVars(profile.profession)}
-      className="surface tint-glow group block overflow-hidden hover:-translate-y-1"
+      className="surface tint-glow spotlight group relative block overflow-hidden hover:-translate-y-1"
     >
       <div className="relative h-20 bg-paper-sunk">
         {/* eslint-disable-next-line @next/next/no-img-element */}

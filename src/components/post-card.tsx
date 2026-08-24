@@ -34,7 +34,7 @@ export function PostCard({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.55, delay: Math.min(index, 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
       style={tintVars(post.author?.profession)}
-      className="group surface tint-glow relative overflow-hidden p-5 sm:p-6"
+      className="group surface tint-glow spotlight relative overflow-hidden p-5 sm:p-6"
     >
       {/* filo colorato che si allunga al passaggio del mouse */}
       <span

@@ -139,7 +139,31 @@ lo vede finché lui non lo approva.
 
 ---
 
-## PASSO 8 (facoltativo) — Metti il tuo dominio
+## PASSO 8 (facoltativo) — Tre utenze di prova
+
+Un sito vuoto non si valuta bene. Con un passaggio puoi popolarlo con tre profili
+italiani completi — una ricercatrice, un cardiologo, una pittrice — che hanno già
+i loro contenuti pubblicati, si seguono a vicenda e si commentano.
+
+1. Supabase → **SQL Editor** → **New query**
+2. Apri sul computer il file `supabase/utenti-di-prova.sql`, seleziona tutto, copia
+3. Incolla e clicca **Run**
+
+Le password di accesso sono scritte in fondo a quel file, se vuoi entrare nei loro
+panni per vedere il sito dal punto di vista di un membro qualsiasi.
+
+Quando il sito sarà avviato davvero, per rimuoverle basta una riga:
+
+```sql
+delete from auth.users where email like '%@artantis.test';
+```
+
+Il comando si può rieseguire quante volte vuoi: rimette sempre le stesse tre utenze,
+non ne crea di doppie.
+
+---
+
+## PASSO 9 (facoltativo) — Metti il tuo dominio
 
 Se hai comprato un dominio, per esempio `artantis.it`:
 
@@ -168,6 +192,11 @@ potrebbe pubblicare qualcosa saltando la revisione.
 ---
 
 ## Domande frequenti
+
+**Dove vedo tutti gli iscritti?**
+Nella voce **Membri** della barra in alto. Ci sono tutti, in ordine: prima chi ha
+i permessi di direzione editoriale (con il distintivo nero **ADMIN**), poi tutti
+gli altri con il distintivo **MEMBRO** e la loro disciplina.
 
 **Come modifico un testo del sito?**
 Su GitHub apri il file, clicca l'icona della matita, cambia il testo e clicca *Commit

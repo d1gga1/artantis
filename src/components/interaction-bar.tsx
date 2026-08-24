@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Heart, Link2, MessageCircle, Repeat2 } from "lucide-react";
 import { AuthDialog } from "@/components/auth-dialog";
 import { toggleLike, toggleRepost } from "@/lib/actions";
@@ -34,6 +34,7 @@ export function InteractionBar({
 
   // Stato ottimistico: l'interfaccia risponde subito, il server segue.
   const [likeState, setLikeState] = useState({ on: liked, n: likes });
+  const [burst, setBurst] = useState(0);
   const [repostState, setRepostState] = useState({ on: reposted, n: reposts });
 
   const guard = (action: string) => {
@@ -46,7 +47,10 @@ export function InteractionBar({
 
   const handleLike = () => {
     if (!guard("mettere un apprezzamento")) return;
-    setLikeState((s) => ({ on: !s.on, n: s.n + (s.on ? -1 : 1) }));
+    setLikeState((s) => {
+      if (!s.on) setBurst((b) => b + 1);
+      return { on: !s.on, n: s.n + (s.on ? -1 : 1) };
+    });
     startTransition(async () => {
       await toggleLike(postId);
       router.refresh();
@@ -90,9 +94,10 @@ export function InteractionBar({
           <motion.span
             animate={likeState.on ? { scale: [1, 1.35, 1] } : { scale: 1 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="flex"
+            className="relative flex"
           >
             <Heart size={17} strokeWidth={2} fill={likeState.on ? "currentColor" : "none"} />
+            <LikeBurst key={burst} show={burst > 0 && likeState.on} />
           </motion.span>
           {likeState.n > 0 && <Count value={likeState.n} />}
         </ActionButton>
@@ -162,5 +167,37 @@ function ActionButton({
     >
       {children}
     </motion.button>
+  );
+}
+
+
+/** Piccola esplosione di scintille quando si mette un apprezzamento. */
+function LikeBurst({ show }: { show: boolean }) {
+  const bits = [0, 1, 2, 3, 4, 5];
+  return (
+    <AnimatePresence>
+      {show && (
+        <span className="pointer-events-none absolute left-1/2 top-1/2" aria-hidden>
+          {bits.map((i) => {
+            const angle = (i / bits.length) * Math.PI * 2;
+            return (
+              <motion.span
+                key={i}
+                className="absolute h-[3px] w-[3px] rounded-full bg-signal-bad"
+                initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
+                animate={{
+                  x: Math.cos(angle) * 17,
+                  y: Math.sin(angle) * 17,
+                  opacity: 0,
+                  scale: 0.4,
+                }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.55, ease: "easeOut" }}
+              />
+            );
+          })}
+        </span>
+      )}
+    </AnimatePresence>
   );
 }

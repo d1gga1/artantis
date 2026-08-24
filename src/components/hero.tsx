@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
-import { LivingBackground } from "@/components/living-background";
 import { ReviewFlow } from "@/components/review-flow";
 import { PROFESSIONS } from "@/lib/types";
 import { tint } from "@/lib/palette";
@@ -20,15 +19,9 @@ export function Hero() {
 
   return (
     <section ref={ref} className="relative overflow-hidden border-b border-line">
-      <div className="absolute inset-0" aria-hidden>
-        <LivingBackground intensity={1} density={1} />
-      </div>
       <div className="grid-canvas pointer-events-none absolute inset-0 mask-fade-b opacity-40" aria-hidden />
       {/* velo che tiene il testo perfettamente leggibile sopra il movimento */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-white/20 to-white/0"
-        aria-hidden
-      />
+
       {/* alone bianco sotto il blocco di testo: la rete resta viva attorno, le parole restano nitide */}
       <div
         className="pointer-events-none absolute inset-0"

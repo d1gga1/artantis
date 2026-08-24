@@ -4,7 +4,7 @@ import { PROFESSIONS } from "@/lib/types";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-line bg-paper-warm">
+    <footer className="relative mt-24 border-t border-line bg-white/55 backdrop-blur-sm">
       <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <Wordmark subtitle={false} size="lg" />
@@ -48,6 +48,11 @@ export function SiteFooter() {
             <li>
               <Link href="/esplora" className="text-[14px] text-ink-soft hover:text-accent">
                 Esplora i profili
+              </Link>
+            </li>
+            <li>
+              <Link href="/membri" className="text-[14px] text-ink-soft hover:text-accent">
+                Membri
               </Link>
             </li>
             <li>
