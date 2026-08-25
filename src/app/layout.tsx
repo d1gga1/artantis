@@ -9,6 +9,7 @@ import { SpotlightLayer } from "@/components/spotlight";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SetupNotice } from "@/components/setup-notice";
+import { WelcomeGate } from "@/components/welcome-gate";
 import { getCurrentProfile } from "@/lib/queries";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
@@ -48,6 +49,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <SiteHeader profile={profile} />
             <main className="flex-1">{children}</main>
             <SiteFooter />
+            {/* prima visita senza account: invito ad accedere o registrarsi */}
+            {!profile && <WelcomeGate />}
           </>
         ) : (
           <SetupNotice />
