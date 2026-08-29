@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it" dir="ltr"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagina non trovata (404) | Danova Tech</title>
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#04060c">
+<meta name="color-scheme" content="dark">
+<link rel="icon" type="image/png" href="/assets/img/logo.png">
+<link rel="apple-touch-icon" href="/assets/img/logo.png">
+<style>
+:root{--bg:#04060c;--blue:#1E6BFF;--blue-2:#4d8bff;--text:#e9edf7;--muted:#8d97ae;--line:rgba(255,255,255,.09)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100dvh;display:grid;place-items:center;padding:32px;background:#000;color:var(--text);
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(60vw 60vw at 20% 10%,rgba(30,107,255,.28),transparent 60%),
+             radial-gradient(50vw 50vw at 85% 80%,rgba(10,60,180,.26),transparent 62%),var(--bg)}
+main{position:relative;z-index:1;width:min(100%,620px);text-align:center}
+img{width:64px;height:64px;margin:0 auto 26px;display:block}
+.code{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-2);margin-bottom:16px}
+h1{font-size:clamp(1.9rem,5vw,2.9rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:18px}
+p{color:var(--muted);margin-bottom:34px}
+.links{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+a{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:12px;text-decoration:none;
+  color:#fff;border:1px solid var(--line);background:rgba(255,255,255,.04);transition:.25s;font-size:15px}
+a:hover{border-color:var(--blue);background:rgba(30,107,255,.14)}
+a.primary{background:var(--blue);border-color:var(--blue)}
+a.primary:hover{background:var(--blue-2);border-color:var(--blue-2)}
+.alt{margin-top:34px;padding-top:26px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+.alt b{display:block;color:var(--text);font-weight:600;margin-bottom:4px}
+</style>
+</head>
+<body>
+<main>
+  <img src="/assets/img/logo.png" alt="Danova Tech" width="64" height="64">
+  <div class="code">Errore 404</div>
+  <h1>Questa pagina non esiste.</h1>
+  <p>Il link potrebbe essere vecchio o scritto male. Da qui torni dove serve.</p>
+  <div class="links">
+    <a class="primary" href="/">Torna alla home</a>
+    <a href="/#servizi">Servizi</a>
+    <a href="/#contatti">Contatti</a>
+  </div>
+  <div class="alt">
+    <b>English / Deutsch</b>
+    <a href="/en/" style="padding:8px 16px;font-size:14px">English site</a>
+    <a href="/de/" style="padding:8px 16px;font-size:14px">Deutsche Seite</a>
+  </div>
+</main>
+</body></html>

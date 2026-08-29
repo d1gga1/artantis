@@ -1,0 +1,16 @@
+{
+  "name": "Danova Tech",
+  "short_name": "Danova Tech",
+  "description": "Siti web, e-commerce, SEO, campagne Meta Ads, app, gestionali e software su misura.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#04060c",
+  "theme_color": "#04060c",
+  "lang": "it",
+  "dir": "ltr",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "/assets/img/logo.png", "sizes": "160x160", "type": "image/png", "purpose": "any" }
+  ]
+}

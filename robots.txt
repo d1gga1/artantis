@@ -1,0 +1,7 @@
+# Danova Tech
+User-agent: *
+Allow: /
+
+# Nessuna area riservata da escludere.
+
+Sitemap: https://danova-tech.com/sitemap.xml
