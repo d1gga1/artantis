@@ -114,6 +114,31 @@ Clicca **Save**. Senza questo passaggio l'accesso può non funzionare correttame
 
 ---
 
+## PASSO 6-bis — Il modello dell'email "password dimenticata"
+
+Serve **una volta sola** e fa funzionare il recupero della password per tutti,
+Vincenzo compreso. Falla dopo il PASSO 6, quando l'indirizzo del sito è già salvato.
+
+In Supabase: **Authentication** -> **Emails** -> scheda **Reset Password**.
+
+Nel testo del messaggio c'è un collegamento. Sostituisci il suo indirizzo con:
+
+```
+{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/nuova-password
+```
+
+Clicca **Save**. Fine.
+
+Perché serve: il modello che Supabase mette di suo funziona solo se l'utente apre
+l'email **sullo stesso browser** da cui ha chiesto il recupero. Con questo modello
+funziona sempre, anche se apre il messaggio dal telefono.
+
+Da quel momento, sulla pagina di accesso compare **Password dimenticata?**: chi la
+clicca scrive la propria email, riceve un collegamento valido un'ora e sceglie la
+nuova password. Il collegamento si può usare una volta sola.
+
+---
+
 ## PASSO 7 — Rendi il Dott. Vincenzo Silvano amministratore
 
 Questo è il passaggio che attiva la moderazione.
@@ -232,6 +257,15 @@ il campo `status` da `approved` a `rejected`.
 Aggiungi su Vercel la variabile `ARTANTIS_DEMO` con valore `1`: il sito mostrerà
 contenuti di esempio senza toccare il database. **Ricordati di rimuoverla** prima
 di aprirlo al pubblico.
+
+**Ho cliccato "Password dimenticata?" ma l'email non arriva.**
+Controlla la posta indesiderata. Se non c'è davvero, verifica il PASSO 6-bis (modello
+*Reset Password*) e il PASSO 6 (*Site URL* corretto). Nota che il sito risponde sempre
+"controlla la tua email" anche quando quell'indirizzo non è registrato: è voluto,
+altrimenti chiunque potrebbe scoprire quali email hanno un profilo su ARTANTIS.
+
+**Il collegamento per la nuova password dice che non è più valido.**
+Vale un'ora e una volta sola. Basta richiederne un altro dalla stessa pagina.
 
 **Conferma email: come la riattivo?**
 In Supabase → Authentication → Providers → Email → accendi *Confirm email*.

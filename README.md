@@ -19,6 +19,8 @@ editoriale prima di comparire nel feed**.
   Alla pubblicazione il contenuto entra in coda di revisione.
 - **Pannello di moderazione** — riservato all'amministratore (Dott. Vincenzo Silvano): coda,
   anteprima completa, approvazione o rifiuto con motivazione visibile all'autore.
+- **Password dimenticata** — dalla pagina di accesso si richiede un collegamento
+  via email, valido un'ora e una volta sola, per scegliere una nuova password.
 - **Area personale** — bio, professione, data di nascita, telefono, email, città,
   Instagram, Facebook, sito web, immagine del profilo e copertina.
 - **Rete sociale** — follow reciproci; **gli elenchi di follower e seguiti sono visibili
@@ -97,6 +99,8 @@ src/
     pubblica/                 editor di proposta con caricamento media
     moderazione/              pannello riservato all'amministratore
     accedi/ registrati/       accesso e registrazione
+    password-dimenticata/     richiesta del collegamento di recupero
+    nuova-password/           scelta della nuova password
     auth/                     conferma email e scambio codice
   components/                 interfaccia e animazioni
   lib/
