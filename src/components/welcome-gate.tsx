@@ -25,7 +25,13 @@ export function WelcomeGate() {
   const esclusa = ESCLUSE.some((p) => pathname === p || pathname.startsWith(p + "/"));
 
   useEffect(() => {
-    if (esclusa) return;
+    // Sulle pagine di accesso/registrazione la schermata non deve mai restare
+    // aperta: senza questa chiusura, arrivandoci dai pulsanti qui sotto
+    // (navigazione lato client) resterebbe davanti al modulo.
+    if (esclusa) {
+      setAperta(false);
+      return;
+    }
     let ospite = false;
     try {
       ospite = window.sessionStorage.getItem(CHIAVE) === "1";
