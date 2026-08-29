@@ -5,7 +5,12 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/area-personale";
+
+  // Il ritorno deve restare dentro al sito: mai un indirizzo esterno.
+  const richiesto = searchParams.get("next");
+  const next = richiesto && richiesto.startsWith("/") && !richiesto.startsWith("//")
+    ? richiesto
+    : "/area-personale";
 
   if (code) {
     const supabase = await createClient();

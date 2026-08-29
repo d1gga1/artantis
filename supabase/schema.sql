@@ -185,10 +185,13 @@ declare
   final_username text;
   suffix integer := 0;
 begin
-  base_username := lower(regexp_replace(
-    coalesce(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1)),
+  -- Prima si mette tutto in minuscolo, poi si tolgono i caratteri non ammessi:
+  -- nell'ordine inverso le maiuscole verrebbero cancellate invece che convertite
+  -- ("Mario.Rossi" diventerebbe "ario.ossi").
+  base_username := regexp_replace(
+    lower(coalesce(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1))),
     '[^a-z0-9_.]', '', 'g'
-  ));
+  );
   if length(base_username) < 3 then
     base_username := 'utente' || substr(replace(new.id::text, '-', ''), 1, 6);
   end if;

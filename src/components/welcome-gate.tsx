@@ -8,7 +8,7 @@ import { ArrowRight, Eye, ShieldCheck } from "lucide-react";
 import { Firma } from "@/components/firma";
 
 const CHIAVE = "artantis:ospite";
-const ESCLUSE = ["/accedi", "/registrati", "/auth"];
+const ESCLUSE = ["/accedi", "/registrati", "/auth", "/password-dimenticata", "/nuova-password"];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 

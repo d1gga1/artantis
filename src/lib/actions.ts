@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { normalizeHandle } from "@/lib/utils";
@@ -85,6 +86,81 @@ export async function signUp(_prev: Result | null, formData: FormData): Promise<
       ok: true,
       message:
         "Ti abbiamo inviato un'email di conferma. Apri il messaggio e clicca sul link per attivare il tuo profilo ARTANTIS.",
+    };
+  }
+
+  revalidatePath("/", "layout");
+  redirect("/area-personale");
+}
+
+/* -------------------------------------------------------------------------- */
+/* Password dimenticata                                                        */
+/* -------------------------------------------------------------------------- */
+
+/** Indirizzo pubblico del sito, ricavato dalla richiesta in corso. */
+async function siteOrigin() {
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host");
+  const proto = h.get("x-forwarded-proto") ?? (host?.startsWith("localhost") ? "http" : "https");
+  return host ? `${proto}://${host}` : "";
+}
+
+/**
+ * Passo 1: invia l'email con il collegamento per reimpostare la password.
+ * La risposta è sempre la stessa, esista o no un profilo con quell'indirizzo:
+ * altrimenti la pagina direbbe a chiunque quali email sono registrate.
+ */
+export async function requestPasswordReset(
+  _prev: Result | null,
+  formData: FormData
+): Promise<Result> {
+  const email = String(formData.get("email") ?? "").trim();
+  if (!email) return { ok: false, error: "Inserisci il tuo indirizzo email." };
+
+  const supabase = await createClient();
+  const origin = await siteOrigin();
+
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${origin}/auth/confirm?next=/nuova-password`,
+  });
+
+  return {
+    ok: true,
+    message:
+      "Se esiste un profilo ARTANTIS con questo indirizzo, ti abbiamo appena inviato un'email con il collegamento per scegliere una nuova password.",
+  };
+}
+
+/**
+ * Passo 2: salva la nuova password. Ci si arriva solo dal collegamento
+ * ricevuto via email, che apre una sessione temporanea.
+ */
+export async function updatePassword(
+  _prev: Result | null,
+  formData: FormData
+): Promise<Result> {
+  const password = String(formData.get("password") ?? "");
+  const conferma = String(formData.get("password_confirm") ?? "");
+
+  if (password.length < 8) return { ok: false, error: "La password deve avere almeno 8 caratteri." };
+  if (password !== conferma) return { ok: false, error: "Le due password non coincidono." };
+
+  const { supabase, user } = await requireUser();
+  if (!user) {
+    return {
+      ok: false,
+      error: "Il collegamento non è più valido: richiedine uno nuovo dalla pagina di accesso.",
+    };
+  }
+
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) {
+    const msg = error.message.toLowerCase();
+    return {
+      ok: false,
+      error: msg.includes("different") || msg.includes("same")
+        ? "La nuova password deve essere diversa da quella precedente."
+        : "Non è stato possibile aggiornare la password. Riprova.",
     };
   }
 

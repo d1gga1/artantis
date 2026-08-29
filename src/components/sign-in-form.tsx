@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { motion } from "framer-motion";
@@ -29,9 +30,17 @@ export function SignInForm({ redirectTo }: { redirectTo: string }) {
       </div>
 
       <div>
-        <label className="label" htmlFor="password">
-          Password
-        </label>
+        <div className="flex items-baseline justify-between gap-3">
+          <label className="label" htmlFor="password">
+            Password
+          </label>
+          <Link
+            href="/password-dimenticata"
+            className="text-[13px] font-medium text-accent hover:text-accent-deep"
+          >
+            Password dimenticata?
+          </Link>
+        </div>
         <input
           id="password"
           name="password"
