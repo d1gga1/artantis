@@ -18,6 +18,7 @@ import {
 import { Avatar } from "@/components/avatar";
 import { Wordmark } from "@/components/wordmark";
 import { NotificationBell } from "@/components/notification-bell";
+import { ShareMenu } from "@/components/share-menu";
 import { signOut } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 import type { Profile } from "@/lib/types";
@@ -93,6 +94,19 @@ export function SiteHeader({ profile }: { profile: Profile | null }) {
               <PenLine size={15} strokeWidth={2.2} />
               Pubblica
             </Link>
+
+            <ShareMenu
+              url={pathname}
+              title="ARTANTIS"
+              text={
+                pathname === "/"
+                  ? "ARTANTIS — spazio editoriale per ricercatori, medici, artisti e farmacisti"
+                  : "Guarda questa pagina su ARTANTIS"
+              }
+              trigger="ghost"
+              align="right"
+              label="Condividi questa pagina"
+            />
 
             {profile && <NotificationBell />}
 

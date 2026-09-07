@@ -3,8 +3,9 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Heart, Link2, MessageCircle, Repeat2 } from "lucide-react";
+import { Heart, MessageCircle, Repeat2 } from "lucide-react";
 import { AuthDialog } from "@/components/auth-dialog";
+import { ShareMenu } from "@/components/share-menu";
 import { toggleLike, toggleRepost } from "@/lib/actions";
 import { cn, formatCount } from "@/lib/utils";
 
@@ -17,6 +18,7 @@ export function InteractionBar({
   reposted,
   isAuthenticated,
   onCommentClick,
+  title,
 }: {
   postId: string;
   likes: number;
@@ -26,11 +28,12 @@ export function InteractionBar({
   reposted: boolean;
   isAuthenticated: boolean;
   onCommentClick?: () => void;
+  /** Titolo del contenuto: entra nel messaggio precompilato della condivisione. */
+  title?: string | null;
 }) {
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [dialog, setDialog] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
 
   // Stato ottimistico: l'interfaccia risponde subito, il server segue.
   const [likeState, setLikeState] = useState({ on: liked, n: likes });
@@ -69,17 +72,6 @@ export function InteractionBar({
   const handleComment = () => {
     if (!guard("commentare")) return;
     onCommentClick?.();
-  };
-
-  const handleShare = async () => {
-    const url = `${window.location.origin}/post/${postId}`;
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch {
-      window.prompt("Copia il link:", url);
-    }
   };
 
   return (
@@ -125,10 +117,12 @@ export function InteractionBar({
 
         <div className="flex-1" />
 
-        <ActionButton onClick={handleShare} active={copied} activeClass="text-accent" label="Copia link">
-          <Link2 size={16} strokeWidth={2} />
-          <span className="text-[12.5px]">{copied ? "Link copiato" : ""}</span>
-        </ActionButton>
+        <ShareMenu
+          url={`/post/${postId}`}
+          title={title ?? undefined}
+          align="right"
+          label="Condividi"
+        />
       </div>
 
       <AuthDialog open={Boolean(dialog)} onClose={() => setDialog(null)} action={dialog ?? "interagire"} />

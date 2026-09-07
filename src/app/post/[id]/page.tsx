@@ -131,6 +131,7 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
                 liked={interactions.liked.has(post.id)}
                 reposted={interactions.reposted.has(post.id)}
                 isAuthenticated={Boolean(viewer)}
+                title={post.title}
               />
             </div>
           )}

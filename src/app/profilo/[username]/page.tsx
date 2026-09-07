@@ -17,6 +17,7 @@ import { FollowButton } from "@/components/follow-button";
 import { ProfileMiniCard } from "@/components/profile-mini-card";
 import { Reveal } from "@/components/motion";
 import { ProfileCover } from "@/components/profile-cover";
+import { ShareMenu } from "@/components/share-menu";
 import {
   getCurrentProfile,
   getNetwork,
@@ -137,7 +138,7 @@ export default async function ProfilePage({
                 </div>
               </div>
 
-              <div className="pb-2">
+              <div className="flex items-center gap-2 pb-2">
                 {isOwn ? (
                   <Link href="/area-personale" className="btn-ghost">
                     Modifica profilo
@@ -149,6 +150,13 @@ export default async function ProfilePage({
                     isAuthenticated={Boolean(viewer)}
                   />
                 )}
+                <ShareMenu
+                  url={`/profilo/${profile.username}`}
+                  title={`${profile.full_name || profile.username} su ARTANTIS`}
+                  trigger="ghost"
+                  align="right"
+                  label="Condividi il profilo"
+                />
               </div>
             </div>
           </Reveal>

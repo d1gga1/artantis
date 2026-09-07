@@ -136,6 +136,7 @@ export function PostCard({
             liked={liked}
             reposted={reposted}
             isAuthenticated={isAuthenticated}
+            title={post.title}
             onCommentClick={() => router.push(`/post/${post.id}#commenti`)}
           />
         </div>
