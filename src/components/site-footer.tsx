@@ -3,6 +3,7 @@ import { Wordmark } from "@/components/wordmark";
 import { PROFESSIONS } from "@/lib/types";
 import { EDITORIAL_LINE } from "@/lib/brand";
 import { Firma } from "@/components/firma";
+import { PoweredBy } from "@/components/powered-by";
 
 export function SiteFooter() {
   return (
@@ -73,9 +74,10 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-line">
-        <div className="container-page flex flex-col items-center justify-between gap-2 py-6 text-[12.5px] text-ink-faint sm:flex-row">
-          <p>© {new Date().getFullYear()} ARTANTIS — tutti i diritti riservati.</p>
-          <Firma variante="riga" className="text-[12.5px]" />
+        <div className="container-page flex flex-col items-center justify-between gap-4 py-6 text-[12.5px] text-ink-faint sm:flex-row sm:gap-6">
+          <p className="order-1">© {new Date().getFullYear()} ARTANTIS — tutti i diritti riservati.</p>
+          <Firma variante="riga" className="order-3 text-[12.5px] sm:order-2" />
+          <PoweredBy className="order-2 sm:order-3" />
         </div>
       </div>
     </footer>

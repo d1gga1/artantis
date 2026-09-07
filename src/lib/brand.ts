@@ -15,3 +15,13 @@ export const BYLINE = `By ${AUTHOR_NAME}`;
 
 /** Firma estesa, usata dove si parla della revisione dei contenuti. */
 export const EDITORIAL_LINE = `Direzione editoriale · ${AUTHOR_NAME}`;
+
+/**
+ * Chi ha realizzato e mantiene il sito: la firma tecnica in fondo a ogni pagina.
+ * Il logo sta in public/immagini/danova-tech.png.
+ */
+export const TECH_PARTNER = {
+  name: "DANOVA TECH",
+  url: "https://danova-tech.com",
+  logo: "/immagini/danova-tech.png",
+};
