@@ -15,16 +15,18 @@ export function SignInForm({ redirectTo }: { redirectTo: string }) {
       <input type="hidden" name="redirect" value={redirectTo} />
 
       <div>
-        <label className="label" htmlFor="email">
-          Indirizzo email
+        <label className="label" htmlFor="identificativo">
+          Nome utente o email
         </label>
         <input
-          id="email"
-          name="email"
-          type="email"
+          id="identificativo"
+          name="identificativo"
+          type="text"
           required
-          autoComplete="email"
-          placeholder="nome@esempio.it"
+          autoComplete="username"
+          spellCheck={false}
+          autoCapitalize="none"
+          placeholder="nome utente oppure nome@esempio.it"
           className="field"
         />
       </div>

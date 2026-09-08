@@ -22,18 +22,40 @@ async function requireUser() {
 /* -------------------------------------------------------------------------- */
 
 export async function signIn(_prev: Result | null, formData: FormData): Promise<Result> {
-  const email = String(formData.get("email") ?? "").trim();
+  // Nel campo si può scrivere indifferentemente il nome utente (es. "vincenzo")
+  // oppure l'indirizzo email. "email" resta accettato per compatibilità.
+  const identificativo = String(formData.get("identificativo") ?? formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
   const redirectTo = String(formData.get("redirect") ?? "/");
 
-  if (!email || !password) return { ok: false, error: "Inserisci email e password." };
+  if (!identificativo || !password)
+    return { ok: false, error: "Inserisci nome utente (o email) e password." };
 
   const supabase = await createClient();
+
+  // Supabase sa fare l'accesso solo con l'email. Se manca la chiocciola vuol dire
+  // che è stato scritto un nome utente: chiediamo al database qual è l'email che
+  // gli corrisponde. La funzione risponde solo se la password è già quella giusta,
+  // così nessun estraneo può usarla per scoprire le email degli iscritti.
+  let email = identificativo;
+
+  if (!identificativo.includes("@")) {
+    const { data, error: lookupError } = await supabase.rpc("email_per_accesso", {
+      nome_utente: identificativo.toLowerCase(),
+      parola_chiave: password,
+    });
+
+    if (lookupError) return { ok: false, error: "Accesso non riuscito. Riprova." };
+    if (!data) return { ok: false, error: "Nome utente o password non corretti." };
+
+    email = String(data);
+  }
+
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     const msg = error.message.toLowerCase().includes("invalid")
-      ? "Email o password non corretti."
+      ? "Nome utente (o email) e password non corrispondono."
       : error.message.toLowerCase().includes("confirm")
         ? "Devi prima confermare l'indirizzo email: controlla la posta."
         : "Accesso non riuscito. Riprova.";

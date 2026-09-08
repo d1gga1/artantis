@@ -640,6 +640,35 @@ create policy "elimina i propri file" on storage.objects for delete to authentic
 create index if not exists profiles_search_idx
   on public.profiles using gin (to_tsvector('simple', coalesce(full_name,'') || ' ' || coalesce(username,'') || ' ' || coalesce(bio,'')));
 
+-- -----------------------------------------------------------------------------
+-- 11. ACCESSO CON IL NOME UTENTE (oltre che con l'email)
+--
+-- Supabase sa riconoscere le persone solo dall'email. Questa funzione traduce
+-- il nome utente (es. "vincenzo") nell'email che gli sta dietro, ma risponde
+-- SOLO se la password ricevuta e' gia' quella giusta: cosi' nessun estraneo
+-- puo' usarla per scoprire le email degli iscritti provando nomi a caso.
+-- -----------------------------------------------------------------------------
+create extension if not exists pgcrypto with schema extensions;
+
+create or replace function public.email_per_accesso(nome_utente text, parola_chiave text)
+returns text
+language sql
+stable
+security definer
+set search_path = public, extensions
+as $$
+  select u.email::text
+  from public.profiles p
+  join auth.users u on u.id = p.id
+  where p.username = lower(btrim(nome_utente))
+    and u.encrypted_password is not null
+    and u.encrypted_password = crypt(parola_chiave, u.encrypted_password)
+  limit 1;
+$$;
+
+revoke all on function public.email_per_accesso(text, text) from public;
+grant execute on function public.email_per_accesso(text, text) to anon, authenticated;
+
 -- =============================================================================
 -- FATTO. Ultimo passaggio, da eseguire DOPO che Vincenzo si è registrato sul
 -- sito: sostituisci l'indirizzo qui sotto con la sua email e lancia la riga.
