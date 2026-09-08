@@ -164,6 +164,35 @@ lo vede finché lui non lo approva.
 
 ---
 
+## PASSO 7-bis — Entrare con il nome utente invece che con l'email
+
+Nella pagina **Accedi** il primo campo si chiama *Nome utente o email*: si può scrivere
+l'indirizzo email, oppure semplicemente il proprio nome utente (per il Dott. Silvano:
+`vincenzosilvano`). Le maiuscole non contano.
+
+Questo funziona perché nel database c'è una funzione che traduce il nome utente
+nell'email corrispondente. È già inclusa nel file `supabase/schema.sql` (sezione 11):
+se hai costruito le tabelle seguendo il PASSO 2 non devi fare nulla.
+
+**Se il database esisteva già** prima di questa aggiunta, apri il file
+`DA-INCOLLARE-accesso-di-vincenzo.txt`, copialo tutto e incollalo in
+Supabase → **SQL Editor** → **New query** → **Run**. Quel file, in un colpo solo:
+
+- aggiunge la funzione,
+- assegna al Dott. Silvano il nome utente `vincenzosilvano`,
+- imposta la sua password,
+- lo rende amministratore.
+
+> **Perché l'email non sparisce.** Supabase riconosce le persone dall'indirizzo email:
+> resta collegato all'account — invisibile agli altri iscritti — e serve per il
+> *Password dimenticata*. Se un giorno vuoi cambiarlo: Supabase → **Authentication** →
+> **Users** → clicca sull'utente → **Edit user**.
+
+> **Nessuno può spiare le email altrui.** La funzione risponde soltanto quando riceve
+> anche la password giusta: provando nomi utente a caso non si ottiene nulla.
+
+---
+
 ## PASSO 8 (facoltativo) — Tre utenze di prova
 
 Un sito vuoto non si valuta bene. Con un passaggio puoi popolarlo con tre profili
