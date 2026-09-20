@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { Users } from "lucide-react";
 import { ExploreControls } from "@/components/explore-controls";
@@ -9,7 +10,12 @@ import { searchProfiles } from "@/lib/queries";
 import { professionLabel } from "@/lib/types";
 import { Firma } from "@/components/firma";
 
-export const metadata: Metadata = { title: "Esplora" };
+export const metadata: Metadata = pageMetadata({
+  title: "Esplora contenuti e membri",
+  description:
+    "Cerca fra i contenuti approvati e i professionisti di ARTANTIS: ricerca, medicina, arte, pittura, arte e benessere, farmacia.",
+  path: "/esplora",
+});
 export const dynamic = "force-dynamic";
 
 export default async function ExplorePage({

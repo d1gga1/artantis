@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { privateMetadata } from "@/lib/seo";
 import { redirect } from "next/navigation";
 import { PostComposer } from "@/components/post-composer";
 import { Reveal } from "@/components/motion";
 import { getCurrentProfile } from "@/lib/queries";
 import { Firma } from "@/components/firma";
 
-export const metadata: Metadata = { title: "Proponi un contenuto" };
+export const metadata: Metadata = privateMetadata("Proponi un contenuto");
 export const dynamic = "force-dynamic";
 
 export default async function PublishPage() {

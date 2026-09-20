@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { privateMetadata } from "@/lib/seo";
 import { redirect } from "next/navigation";
 import { FileText, Heart, UserRound, Users } from "lucide-react";
 import { ProfileForm } from "@/components/profile-form";
@@ -10,7 +11,7 @@ import { CountUp } from "@/components/count-up";
 import { cn } from "@/lib/utils";
 import { Firma } from "@/components/firma";
 
-export const metadata: Metadata = { title: "Area personale" };
+export const metadata: Metadata = privateMetadata("Area personale");
 export const dynamic = "force-dynamic";
 
 export default async function PersonalAreaPage({

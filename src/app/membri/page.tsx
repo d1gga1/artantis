@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ShieldCheck, Users } from "lucide-react";
 import { Avatar } from "@/components/avatar";
@@ -12,7 +13,12 @@ import { COLORE } from "@/lib/colore";
 import { formatCount, formatDateIt } from "@/lib/utils";
 import { Firma } from "@/components/firma";
 
-export const metadata: Metadata = { title: "Membri" };
+export const metadata: Metadata = pageMetadata({
+  title: "Membri: ricercatori, medici e artisti",
+  description:
+    "Ricercatori, medici, artisti, pittori, farmacisti e professionisti di arte e benessere che pubblicano su ARTANTIS.",
+  path: "/membri",
+});
 export const dynamic = "force-dynamic";
 
 export default async function MembersPage() {

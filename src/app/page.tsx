@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { FileText, PenLine, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { Hero } from "@/components/hero";
@@ -7,12 +8,19 @@ import { EmptyState } from "@/components/empty-state";
 import { ProfileMiniCard } from "@/components/profile-mini-card";
 import { Reveal } from "@/components/motion";
 import { nomeProprio } from "@/lib/utils";
+import { absoluteUrl } from "@/lib/seo";
 import {
   getCurrentProfile,
   getFeed,
   getViewerInteractions,
   searchProfiles,
 } from "@/lib/queries";
+
+export const metadata: Metadata = {
+  // La home tiene titolo e descrizione generali del sito (vedi layout.tsx):
+  // qui serve solo dichiarare qual è il suo indirizzo ufficiale.
+  alternates: { canonical: absoluteUrl("/") },
+};
 
 export const dynamic = "force-dynamic";
 

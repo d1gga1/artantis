@@ -1,0 +1,25 @@
+# Dipendenze e file generati
+node_modules
+.next
+out
+build
+.vercel
+next-env.d.ts
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# Sistema
+.DS_Store
+npm-debug.log*
+*.pem
+
+# Chiavi e segreti: non devono MAI finire su GitHub
+.env
+.env*.local
+
+# Materiale di lavoro: resta sul Mac.
+# Qui dentro ci sono password e istruzioni riservate.
+DA-INCOLLARE-*.txt
+CARICA-SU-GITHUB/
+anteprime/
+Claude outputs/

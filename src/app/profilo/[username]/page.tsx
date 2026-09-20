@@ -1,5 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import {
+  NO_INDEX_RULES,
+  absoluteUrl,
+  pageMetadata,
+  toDescription,
+} from "@/lib/seo";
 import { notFound } from "next/navigation";
 import {
   CalendarDays,
@@ -40,11 +47,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { username } = await params;
   const profile = await getProfileByUsername(username);
-  if (!profile) return { title: "Profilo non trovato" };
-  return {
+  if (!profile) return { title: "Profilo non trovato", robots: NO_INDEX_RULES };
+
+  return pageMetadata({
     title: profile.full_name || profile.username,
-    description: profile.bio || `${professionLabel(profile.profession)} su ARTANTIS.`,
-  };
+    description: toDescription(
+      profile.bio ||
+        `${professionLabel(profile.profession)} su ARTANTIS, lo spazio editoriale di ricerca, medicina e arte.`
+    ),
+    path: `/profilo/${profile.username}`,
+    type: "profile",
+    image: absoluteUrl(`/profilo/${profile.username}/opengraph-image`),
+  });
 }
 
 export default async function ProfilePage({
@@ -111,8 +125,43 @@ export default async function ProfilePage({
 
   const t = tint(profile.profession);
 
+  // Scheda per Google: chi è questa persona e cosa fa.
+  const profileJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": absoluteUrl(`/profilo/${profile.username}`),
+    inLanguage: "it-IT",
+    isPartOf: { "@id": absoluteUrl("/#website") },
+    dateCreated: profile.created_at,
+    mainEntity: {
+      "@type": "Person",
+      "@id": absoluteUrl(`/profilo/${profile.username}#person`),
+      name: profile.full_name || profile.username,
+      alternateName: profile.username,
+      url: absoluteUrl(`/profilo/${profile.username}`),
+      jobTitle: professionLabel(profile.profession),
+      description: profile.bio ?? undefined,
+      image: profile.avatar_url ?? undefined,
+      address: profile.city
+        ? { "@type": "PostalAddress", addressLocality: profile.city }
+        : undefined,
+      sameAs: [
+        profile.website,
+        profile.instagram ? `https://instagram.com/${profile.instagram}` : null,
+        profile.facebook ? `https://facebook.com/${profile.facebook}` : null,
+      ].filter(Boolean),
+      memberOf: { "@id": absoluteUrl("/#organization") },
+      interactionStatistic: {
+        "@type": "InteractionCounter",
+        interactionType: "https://schema.org/FollowAction",
+        userInteractionCount: profile.follower_count,
+      },
+    },
+  };
+
   return (
     <div style={tintVars(profile.profession)}>
+      <JsonLd data={profileJsonLd} />
       <ProfileCover url={profile.cover_url} profession={profile.profession} />
 
       <div className="container-page max-w-5xl">

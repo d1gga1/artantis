@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { privateMetadata } from "@/lib/seo";
 import { KeyRound, TimerOff } from "lucide-react";
 import { AuthShell } from "@/components/auth-shell";
 import { NewPasswordForm } from "@/components/new-password-form";
 import { getSessionUser } from "@/lib/queries";
 
-export const metadata: Metadata = { title: "Scegli una nuova password" };
+export const metadata: Metadata = privateMetadata("Scegli una nuova password");
 export const dynamic = "force-dynamic";
 
 export default async function NewPasswordPage() {

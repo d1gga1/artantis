@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { privateMetadata } from "@/lib/seo";
 import { redirect } from "next/navigation";
 import { AuthShell } from "@/components/auth-shell";
 import { SignInForm } from "@/components/sign-in-form";
 import { getSessionUser } from "@/lib/queries";
 
-export const metadata: Metadata = { title: "Accedi" };
+export const metadata: Metadata = privateMetadata("Accedi", "Entra nel tuo profilo ARTANTIS.");
 export const dynamic = "force-dynamic";
 
 export default async function SignInPage({

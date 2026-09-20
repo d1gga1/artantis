@@ -1,9 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { privateMetadata } from "@/lib/seo";
 import { AuthShell } from "@/components/auth-shell";
 import { PasswordResetForm } from "@/components/password-reset-form";
 
-export const metadata: Metadata = { title: "Password dimenticata" };
+export const metadata: Metadata = privateMetadata("Password dimenticata");
 export const dynamic = "force-dynamic";
 
 export default async function ForgotPasswordPage({

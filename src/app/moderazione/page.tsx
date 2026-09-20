@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { privateMetadata } from "@/lib/seo";
 import { redirect } from "next/navigation";
 import { CheckCircle2, Clock, Inbox, ShieldCheck, XCircle } from "lucide-react";
 import { ModerationCard } from "@/components/moderation-card";
@@ -9,7 +10,7 @@ import { getCurrentProfile, getPendingPosts, getReviewedPosts } from "@/lib/quer
 import { cn } from "@/lib/utils";
 import { Firma } from "@/components/firma";
 
-export const metadata: Metadata = { title: "Moderazione" };
+export const metadata: Metadata = privateMetadata("Moderazione");
 export const dynamic = "force-dynamic";
 
 export default async function ModerationPage({

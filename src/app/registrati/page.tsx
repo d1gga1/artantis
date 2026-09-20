@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { privateMetadata } from "@/lib/seo";
 import { redirect } from "next/navigation";
 import { AuthShell } from "@/components/auth-shell";
 import { SignUpForm } from "@/components/sign-up-form";
 import { getSessionUser } from "@/lib/queries";
 
-export const metadata: Metadata = { title: "Crea il tuo profilo" };
+export const metadata: Metadata = privateMetadata("Crea il tuo profilo", "Registrati per commentare, seguire i membri e proporre contenuti.");
 export const dynamic = "force-dynamic";
 
 export default async function SignUpPage({
